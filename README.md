@@ -15,6 +15,33 @@ IaC is the ability to translate cloud resources into reusable code. There are nu
 
 # Key Resources
 - [What is Azure Resource Manager](https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/overview)
+- [Microsoft's Definition of IaC](https://docs.microsoft.com/en-us/dotnet/architecture/cloud-native/infrastructure-as-code)
+- [Azure Developer CLI](https://docs.microsoft.com/en-us/azure/developer/azure-developer-cli/)
+
+# Benefits of IaC
+IaC offers numerous benefits in contrast to manually creating Azure Resources via a portal. Some of those benefits are:
+- Quickly creating additional environments and/or instances
+- Placing infrastructure resources under CI/CD and source control for better quality and collaboration
+- Reusable modules to drive consistency and lower bearer of entry
+- Enhanced Security
+
+# Current Flavors
+- [Bicep](documentation/bicep.md)
+- [Terraform](documentation/terraform.md)
+- [ARM](documentation/terraform.md)
+
+# IaC Best Practices
+- Code is redeployable
+- Easily readable
+- Modules are completely reusable and independent from the main template
+  - All Key values are parameters/variables
+  - Can default value still providing ability to override
+- No secrets stored in the codebase
+- IaC code is stored together with application code
+  - Faster Development Time
+  - Adhere to same Software Delivery Lifecycle
+  - Deployed together to prevent drift/staleness
+- Each environment specifics is a separate parameter file
 
 # Repo Structure
 The first recommend step would be to clone this repo. If unfamiliar then check out GitHub's documentation on [cloning repos](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)
@@ -34,15 +61,3 @@ This repository will try and leverage "modules". This is a bit of a more advance
 
 ## Parameters/Variables
 A separate folder leveraging the appropriate terminology (i.e. parameter, variable,etc) will be configured for under each example. This is done so to illustrate how flexibility on how resources are defined and created across environments could be configured. For example a more costly resource offering could be required for Production vs a Development environment.
-
-# Benefits of IaC
-IaC offers numerous benefits in contrast to manually creating Azure Resources via a portal. Some of those benefits are:
-- Quickly creating additional environments and/or instances
-- Placing infrastructure resources under CI/CD and source control for better quality and collaboration
-- Reusable modules to drive consistency and lower bearer of entry
-- Enhanced Security
-
-# Current Flavors
-- [Bicep](documentation/bicep.md)
-- [Terraform](documentation/terraform.md)
-- [ARM](documentation/terraform.md)
