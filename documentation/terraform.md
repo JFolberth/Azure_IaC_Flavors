@@ -48,6 +48,11 @@ Deployment is done using the [`terraform apply` command.](https://www.terraform.
 In this repo it would be:
 `terraform apply -var-file="variables/dev.eus.variables.tfvars"   `
 
+# Formatting
+Terraform provides the ability to auto format your code. This can be accomplished via a [`terraform fmt` command](https://www.terraform.io/cli/commands/fmt)
+
+For this repo all Terraform can be ran with a `terraform fmt -recursive` within the Terraform folder
+
 # Links
 - [Hashicorp](https://www.terraform.io/)
 - [Azurerm Provider](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs)
