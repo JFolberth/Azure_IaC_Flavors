@@ -1,11 +1,13 @@
 @description('Location for all resources.')
-param location string 
-param baseName string
-
+param location string
+@description('Base name that will appear for all resources.') 
+param baseName string = 'flavorsiacbicep'
+@description('Three leter environment abreviation to denote environment that will appear in all resource names') 
 param environmentName string = 'dev'
 
 
 targetScope = 'subscription'
+
 var regionReference = {
   centralus: 'cus'
   eastus: 'eus'
