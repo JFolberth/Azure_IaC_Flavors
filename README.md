@@ -37,5 +37,5 @@ IaC offers numerous benefits in contrast to manually creating Azure Resources vi
 - Enhanced Security
 
 # Current Flavors
-- [Bicep](\documentation\bicep.md)
-- [Terraform](\documentation\terraform.md)
+- [Bicep](documentation/bicep.md
+- [Terraform](documentation/bicep.md)
