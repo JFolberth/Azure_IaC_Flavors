@@ -3,6 +3,9 @@ This purpose of this repository is to offer a tangible experience to learn and c
 
 In an effort to reduce duplicate documentation this repository will reference provider documentation when available. This also provides additional resources when starting your IaC journey.
 
+# Who this repo is for
+This repo is for anyone interested in learning about the different ways to write IaC. The examples provided should all be fully deployable. There will be no "shying away" from advanced features of the language. The intent is to provide the necessary examples and documentations for one to find out how to fully utilized. This is done such users who are advanced in one language can see the equivalent functionality in another.
+
 # What is IaC
 IaC is the ability to translate cloud resources into reusable code. There are numerous "flavors" of how this can be accomplished. There is no right answer, there is no wrong answer. Just various options that are available to any person or organization.
 
@@ -21,10 +24,10 @@ After successfully cloning the best experience will be leveraging an IDE with a 
 Then one would navigate to the via terminal commands to the desired folder location. This will allow you to deploy changes when scoped to a specific folder.
 
 ## Examples
-Each type of scenario will be the top level example. This is done to provide the experience of being able to quickly view how an example can be viewed across multiple languanges.
+Each type of scenario will be the top level example. This is done to provide the experience of being able to quickly view how an example can be viewed across multiple languages. Any functionality in an example for one specific language such as type casting, validation, and looping shall be similarly accomplished across other languages for teh same example.
 
-## Languanges
-Below each example will be a list of languages which have the same example defined in a similar fashion. Based on availability not all examples will contain the same languanges. Want to improve it, provide an example in the language you are looking for!
+## Languages
+Below each example will be a list of languages which have the same example defined in a similar fashion. Based on availability not all examples will contain the same languages. Want to improve it, provide an example in the language you are looking for!
 
 ## Modules
 This repository will try and leverage "modules". This is a bit of a more advanced terminology for IaC;however, it is a necessary component to fully grasp the power, reusability, and readability of IaC. Modules are individual Azure resources or groups of Azure resources that are defined within the same template. This allows for reusability within the same project as well as increased readability.
