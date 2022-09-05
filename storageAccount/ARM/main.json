@@ -17,7 +17,7 @@
     },
     "baseName": {
       "type": "string",
-      "defaultValue": "flavorsiacbicep",
+      "defaultValue": "flavorsiacarm",
       "metadata": {
         "description": "Base name that will appear for all resources."
       }
