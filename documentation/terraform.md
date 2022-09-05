@@ -6,13 +6,26 @@ Per Hashicorp Terraform is:
 HashiCorp Terraform is an infrastructure as code tool that lets you define both cloud and on-prem resources in human-readable configuration files that you can version, reuse, and share. You can then use a consistent workflow to provision and manage all of your infrastructure throughout its lifecycle. Terraform can manage low-level components like compute, storage, and networking resources, as well as high-level components like DNS entries and SaaS features.
 >
 # Some Pointers
-- There is [state file](https://www.terraform.io/language/state) that can be local stored, remote stored selfhosted, or remote hosted by Hashicorp
+- There is [state file](https://www.terraform.io/language/state) that can be local stored, remote stored self-hosted, or remote hosted by Hashicorp
 - Providers are open sourced
 - Some providers won't be updated with Day 0 support
 - Terraform itself is cloud agnostic, providers aren't
 - When storing state remote, secrets are contained in plain text
 - Managing/tracking provider and Terraform versions
+- Multiple cloud and non cloud providers available
+- Best practice tends to have use lower case and `_` in place of spaces
 
+# Basic Flow
+![Basic Terraform Workflow](images\terraform_basic.png)
+Sourced from: [Terraform.io](https://www.terraform.io/intro)
+
+
+# Providers
+[Providers](https://registry.terraform.io/browse/providers) are key factor when leveraging Terraform. >
+>
+Providers are a logical abstraction of an upstream API. They are responsible for understanding API interactions and exposing resources. 
+>
+Providers are maintained via open source and usually are endorsed by the organization they are for.
 # PreReqs
 - (Terraform) [https://learn.hashicorp.com/tutorials/terraform/install-cli] 
 
