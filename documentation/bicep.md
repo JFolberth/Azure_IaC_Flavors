@@ -5,9 +5,16 @@ Bicep is a DSL created and maintained by Microsoft starting with v 0.3 onward. B
 
 # Some Pointers
 - There is no state file
-- Anything acheivable in ARM can be done in Bicep
+- Anything achievable in ARM can be done in Bicep
 - Bicep is released monthly
 - Day 1 support for any Azure resources
+- Azure is only provider available
+
+# How It Works
+The Azure CLI will compile a Bicep file into an ARM Template. This template will be sent directly to the Azure Resource Manager.
+
+![Diagram illustrating Azure Consistent Management Layer](images\consistent-management-layer.png)
+Source From: [Microsoft Docs](https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/overview)
 
 # PreReqs
 - [Bicep Tools](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/install#vs-code-and-bicep-extension)
