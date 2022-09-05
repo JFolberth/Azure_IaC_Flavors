@@ -11,9 +11,9 @@ IaC is the ability to translate cloud resources into reusable code. There are nu
 - Will not teach you how to use each IaC flavor, rather provide resources and examples
 
 # Repo Structure
-The first recommend step would be to clone this repo. If unfamilar then check out GitHub's documentation on (cloning repos)[https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository]
+The first recommend step would be to clone this repo. If unfamilar then check out GitHub's documentation on [cloning repos] (https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)
 
-After successfully cloning the best experience will be leveraging an IDE with a command terminal such as (VS Code)[https://code.visualstudio.com/download].
+After successfully cloning the best experience will be leveraging an IDE with a command terminal such as [VS Code](https://code.visualstudio.com/download)
 
 Then one would navigate to the via terminal commands to the desired folder location. This will allow you to deploy changes when scoped to a specific folder.
 
