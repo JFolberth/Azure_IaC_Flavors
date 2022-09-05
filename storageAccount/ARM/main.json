@@ -1,0 +1,134 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.9.1.41621",
+      "templateHash": "2967084478595920843"
+    }
+  },
+  "parameters": {
+    "location": {
+      "type": "string",
+      "metadata": {
+        "description": "Location for all resources."
+      }
+    },
+    "baseName": {
+      "type": "string",
+      "defaultValue": "flavorsiacbicep",
+      "metadata": {
+        "description": "Base name that will appear for all resources."
+      }
+    },
+    "environmentName": {
+      "type": "string",
+      "defaultValue": "dev",
+      "metadata": {
+        "description": "Three leter environment abreviation to denote environment that will appear in all resource names"
+      }
+    }
+  },
+  "variables": {
+    "regionReference": {
+      "centralus": "cus",
+      "eastus": "eus",
+      "westus": "wus",
+      "westus2": "wus2"
+    },
+    "suffix": "[format('{0}-{1}', parameters('environmentName'), variables('regionReference')[parameters('location')])]",
+    "shortSufix": "[format('{0}{1}', parameters('environmentName'), variables('regionReference')[parameters('location')])]",
+    "resourceGroupName": "[format('rg-{0}-{1}', parameters('baseName'), variables('suffix'))]",
+    "storageAccountName": "[toLower(format('sa{0}{1}', parameters('baseName'), variables('shortSufix')))]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Resources/resourceGroups",
+      "apiVersion": "2021-04-01",
+      "name": "[variables('resourceGroupName')]",
+      "location": "[parameters('location')]",
+      "tags": {
+        "Customer": "FlavorsIaC"
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-10-01",
+      "name": "storageAccountModule",
+      "resourceGroup": "[variables('resourceGroupName')]",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "storageAccountName": {
+            "value": "[variables('storageAccountName')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.9.1.41621",
+              "templateHash": "10953122851074004506"
+            }
+          },
+          "parameters": {
+            "storageAccountName": {
+              "type": "string",
+              "metadata": {
+                "description": "Name for the storage account"
+              }
+            },
+            "location": {
+              "type": "string",
+              "metadata": {
+                "description": "Location for resource."
+              }
+            },
+            "storageAccountType": {
+              "type": "string",
+              "defaultValue": "Standard_LRS",
+              "allowedValues": [
+                "Premium_LRS",
+                "Premium_ZRS",
+                "Standard_GRS",
+                "Standard_GZRS",
+                "Standard_LRS",
+                "Standard_RAGRS",
+                "Standard_RAGZRS",
+                "Standard_ZRS"
+              ],
+              "metadata": {
+                "description": "Storage Account type"
+              }
+            }
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Storage/storageAccounts",
+              "apiVersion": "2021-06-01",
+              "name": "[parameters('storageAccountName')]",
+              "location": "[parameters('location')]",
+              "sku": {
+                "name": "[parameters('storageAccountType')]"
+              },
+              "kind": "StorageV2",
+              "properties": {}
+            }
+          ]
+        }
+      },
+      "dependsOn": [
+        "[subscriptionResourceId('Microsoft.Resources/resourceGroups', variables('resourceGroupName'))]"
+      ]
+    }
+  ]
+}
