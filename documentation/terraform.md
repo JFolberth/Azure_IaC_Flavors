@@ -16,7 +16,7 @@ HashiCorp Terraform is an infrastructure as code tool that lets you define both 
 - Best practice tends to have use lower case and `_` in place of spaces
 
 # Basic Flow
-:::image type="content" source="images/terraform_basic.png" alt-text="Basic Terraform Workflow":::
+![Basic Terraform Workflow](images/terraform_basic.png)
 Sourced from: [Terraform.io](https://www.terraform.io/intro)
 
 
