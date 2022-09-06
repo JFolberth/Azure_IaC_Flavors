@@ -16,7 +16,8 @@ HashiCorp Terraform is an infrastructure as code tool that lets you define both 
 - Best practice tends to have use lower case and `_` in place of spaces
 
 # Basic Flow
-![Basic Terraform Workflow](images\terraform_basic.png)
+![Basic Terraform Workflow](images/terraform_basic.png)
+
 Sourced from: [Terraform.io](https://www.terraform.io/intro)
 
 
@@ -27,7 +28,7 @@ Providers are a logical abstraction of an upstream API. They are responsible for
 >
 Providers are maintained via open source and usually are endorsed by the organization they are for.
 # PreReqs
-- (Terraform) [https://learn.hashicorp.com/tutorials/terraform/install-cli] 
+- (Terraform)[https://learn.hashicorp.com/tutorials/terraform/install-cli] 
 
 # Initializing Terraform
 Before running any Terraform you need to initialized the working direction via [`terraform init`.](https://www.terraform.io/cli/commands/init)
@@ -57,4 +58,4 @@ For this repo all Terraform can be ran with a `terraform fmt -recursive` within 
 - [Hashicorp](https://www.terraform.io/)
 - [Azurerm Provider](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs)
 - [AzAPI Provider](https://registry.terraform.io/providers/Azure/azapi/latest/docs)
-- [Getting Started with Terraform for Azure](https://learn.hashicorp.com/collections/terraform/azure-get-started)]
+- [Getting Started with Terraform for Azure](https://learn.hashicorp.com/collections/terraform/azure-get-started)
