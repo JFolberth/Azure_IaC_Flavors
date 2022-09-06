@@ -35,6 +35,6 @@ Deployment for these examples are done at the Subscription level. This is done t
 - [GitHub Project Site](https://github.com/Azure/bicep)
 - [Microsoft Learning Path](https://docs.microsoft.com/en-us/learn/paths/fundamentals-bicep/)
 - [Bicep Community Calls](https://www.youtube.com/channel/UCZZ3-oMrVI5ssheMzaWC4uQ/videos)
-- [Bicep Resource Schemas](https://docs.microsoft.com/en-us/azure/templates/)]
+- [Bicep Resource Schemas](https://docs.microsoft.com/en-us/azure/templates/)
 - [Microsoft Azure Quickstarts](https://azure.microsoft.com/en-us/resources/templates/)
 - [Bicep to ARM Playground](https://bicepdemo.z22.web.core.windows.net/)

@@ -35,7 +35,7 @@ Deployment for these examples are done at the Subscription level. This is done t
 # Links
 - [Microsoft Azure Quickstarts](https://azure.microsoft.com/en-us/resources/templates/)
 - [Microsoft Learning Path](https://docs.microsoft.com/en-us/learn/paths/deploy-manage-resource-manager-templates/)
-- [ARM Resource Schemas](https://docs.microsoft.com/en-us/azure/templates/#arm-templates)]
+- [ARM Resource Schemas](https://docs.microsoft.com/en-us/azure/templates/#arm-templates)
 - [Bicep to ARM Playground](https://bicepdemo.z22.web.core.windows.net/)
 - [ARM Template Schema](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/syntax)
 - [How to Export an ARM Template](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/export-template-portal)
