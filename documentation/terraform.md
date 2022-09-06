@@ -17,6 +17,7 @@ HashiCorp Terraform is an infrastructure as code tool that lets you define both 
 
 # Basic Flow
 ![Basic Terraform Workflow](images/terraform_basic.png)
+
 Sourced from: [Terraform.io](https://www.terraform.io/intro)
 
 

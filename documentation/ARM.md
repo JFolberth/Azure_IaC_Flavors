@@ -16,6 +16,7 @@ Every resource within Azure, no matter how it is deployed, will have a resource 
 The JSON file will be submitted directly to the Azure Resource Manager for provisioning the necessary Azure resources.
 
 ![Diagram illustrating Azure Consistent Management Layer](images/consistent-management-layer.png)
+
 Source From: [Microsoft Docs](https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/overview)
 
 # PreReqs
