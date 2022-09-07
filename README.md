@@ -25,6 +25,11 @@ IaC offers numerous benefits in contrast to manually creating Azure Resources vi
 - Reusable modules to drive consistency and lower bearer of entry
 - Enhanced Security
 
+# Understanding Declaritive vs Imperative 
+To date this repo is strictly leveraging declarative IaC Tools. What's this mean? Declarative provides the 'template' or the to be state of the infrastructure during deployment. Think of deployments of a specific resource, resource group. Imperative IaC providers require each individual step to be tasked out. It might help to think declarative is defining the what and imperative is defining the how.
+
+Imperative programming requires users to have a mroe in depth knowledge of the scripting process, this also gives them the ability to more "fine tune" the deployment process. Declarative programming has become more popular in part due to the learning curve to get started. I am not saying one way is better then the other. Again they both have their pros and their cons.
+
 # Current Flavors
 - [Bicep](documentation/bicep.md)
 - [Terraform](documentation/terraform.md)
