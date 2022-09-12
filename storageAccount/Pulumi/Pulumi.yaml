@@ -1,0 +1,3 @@
+name: AzureIaCFlavors
+description: Sample Storage Account project from Azure Flavors of IaC.
+runtime: dotnet

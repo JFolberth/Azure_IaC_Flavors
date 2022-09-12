@@ -32,3 +32,35 @@ override.tf.json
 # Ignore CLI configuration files
 .terraformrc
 terraform.rc
+
+# Pulumi Ignore
+/.pulumi/
+/.vscode/
+/.vs/
+bin/
+build/
+node_modules/
+*.pyc
+.Python
+venv/
+include/
+lib/
+yarn.lock
+package-lock.json
+.idea/
+.ionide/
+*.iml
+key.rsa*
+obj/
+vendor
+Gopkg.lock
+**/.DS_Store
+
+**/ci-scripts
+
+# Java app
+.gradle/
+.settings/
+.project
+.classpath
+target/
