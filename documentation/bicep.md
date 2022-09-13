@@ -25,7 +25,7 @@ Source From: [Microsoft Docs](https://docs.microsoft.com/en-us/azure/azure-resou
 The best way to validate changes would be to leverage the Azure CLI `what-if` command similar to:
 ` az deployment sub what-if --location EastUS --name azureADOCLIDeployment --template-file main.bicep --parameters parameters/dev.eus.parameters.json`
 
-For more information check ou the [ARM Template deployment what-if operation](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/deploy-what-if?tabs=azure-powershell)
+For more information check ouf the [ARM Template deployment what-if operation](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/deploy-what-if?tabs=azure-powershell)
 
 # Deploying
 Deployment for these examples are done at the Subscription level. This is done to ensure full deployment by creating the required Resource Group.
