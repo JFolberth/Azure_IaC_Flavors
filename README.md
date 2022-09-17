@@ -34,6 +34,7 @@ Imperative programming requires users to have a mroe in depth knowledge of the s
 - [Bicep](documentation/bicep.md)
 - [Terraform](documentation/terraform.md)
 - [ARM](documentation/ARM.md)
+- [Pulumi](documentation/pulumi.md)
 
 # IaC Best Practices
 - Code is redeployable
