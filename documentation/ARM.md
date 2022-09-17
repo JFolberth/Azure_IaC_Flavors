@@ -1,4 +1,4 @@
-# Azure Resource Manager (ARM) Templates
+# Azure Resource Manager (ARM) Templates <img align="right" width="75" height="75" src="images/arm/arm_logo.png" alt="Azure Resource Manager Logo">
 
 # About
 Every resource within Azure, no matter how it is deployed, will have a resource definition written as an ARM template in JSON. There are also certain resources that no matter what language they utilized will require the definition be written in a JSON/ARM template. Such resources as Azure Policy, Azure Data Factory, and Azure Logic Apps just to name a few.
@@ -15,7 +15,7 @@ Every resource within Azure, no matter how it is deployed, will have a resource 
 # How It Works
 The JSON file will be submitted directly to the Azure Resource Manager for provisioning the necessary Azure resources.
 
-![Diagram illustrating Azure Consistent Management Layer](images/consistent-management-layer.png)
+![Diagram illustrating Azure Consistent Management Layer](images/ARM/consistent-management-layer.png)
 
 Source From: [Microsoft Docs](https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/overview)
 

@@ -1,4 +1,4 @@
-# Pulumi
+# Pulumi <img align="right" width="75" height="75" src="images/pulumi/pulumi_logo.png" alt="Pulumi Logo">
 
 # About
 The intent behind Pulumi is to provide developers with a native infrastructure as code experience within the language they are accustomed to. The desire is to reduce the learning curve as well as integrating the IaC experience into native tooling.
@@ -22,7 +22,7 @@ Currently Pulumi supports the following languages/filetypes:
 # How It Works
 CLI will query the Pulumi service for last deployed state to determine creates, updates, deletes
 
-![Diagram of Pulumi service engine](images/pulumi_engine-block-diagram.png)
+![Diagram of Pulumi service engine](images/pulumi/pulumi_engine-block-diagram.png)
 
 Source From: [Pulumi Documentation](https://www.pulumi.com/docs/intro/concepts/how-pulumi-works/)
 
