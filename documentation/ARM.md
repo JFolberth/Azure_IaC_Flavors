@@ -1,4 +1,4 @@
-# Azure Resource Manager (ARM) Templates <img align="right" width="75" height="75" src="images/arm/arm_logo.png" alt="Azure Resource Manager Logo">
+# Azure Resource Manager (ARM) Templates <img align="right" width="75" height="75" src="images/ARM/arm_logo.png" alt="Azure Resource Manager Logo">
 
 # About
 Every resource within Azure, no matter how it is deployed, will have a resource definition written as an ARM template in JSON. There are also certain resources that no matter what language they utilized will require the definition be written in a JSON/ARM template. Such resources as Azure Policy, Azure Data Factory, and Azure Logic Apps just to name a few.
