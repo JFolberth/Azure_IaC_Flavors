@@ -13,7 +13,7 @@ provider "azurerm" {
   features {}
 }
 variable "base_name" {
-  default     = "IacFlavorsTF"
+  default     = "iacflavorstfsa"
   description = "Base name that will appear for all resources."
 }
 variable "environment_name" {
