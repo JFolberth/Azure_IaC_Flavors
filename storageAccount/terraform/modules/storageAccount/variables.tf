@@ -32,3 +32,8 @@ variable "storage_account_replication_type" {
     error_message = "Please provide a valide replication type for the stroage account"
   }
 }
+
+variable "language" {
+  type        = string
+  description = "Language used to build the resource"
+}

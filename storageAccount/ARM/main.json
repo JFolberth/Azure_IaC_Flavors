@@ -4,8 +4,8 @@
   "metadata": {
     "_generator": {
       "name": "bicep",
-      "version": "0.9.1.41621",
-      "templateHash": "2967084478595920843"
+      "version": "0.10.61.36676",
+      "templateHash": "1606161356006431081"
     }
   },
   "parameters": {
@@ -17,7 +17,7 @@
     },
     "baseName": {
       "type": "string",
-      "defaultValue": "flavorsiacarm",
+      "defaultValue": "flavorsiacbicep",
       "metadata": {
         "description": "Base name that will appear for all resources."
       }
@@ -40,7 +40,8 @@
     "suffix": "[format('{0}-{1}', parameters('environmentName'), variables('regionReference')[parameters('location')])]",
     "shortSufix": "[format('{0}{1}', parameters('environmentName'), variables('regionReference')[parameters('location')])]",
     "resourceGroupName": "[format('rg-{0}-{1}', parameters('baseName'), variables('suffix'))]",
-    "storageAccountName": "[toLower(format('sa{0}{1}', parameters('baseName'), variables('shortSufix')))]"
+    "storageAccountName": "[toLower(format('sa{0}{1}', parameters('baseName'), variables('shortSufix')))]",
+    "language": "ARM"
   },
   "resources": [
     {
@@ -49,7 +50,8 @@
       "name": "[variables('resourceGroupName')]",
       "location": "[parameters('location')]",
       "tags": {
-        "Customer": "FlavorsIaC"
+        "Customer": "FlavorsIaC",
+        "Language": "[variables('language')]"
       }
     },
     {
@@ -68,6 +70,9 @@
           },
           "storageAccountName": {
             "value": "[variables('storageAccountName')]"
+          },
+          "language": {
+            "value": "[variables('language')]"
           }
         },
         "template": {
@@ -76,8 +81,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.9.1.41621",
-              "templateHash": "10953122851074004506"
+              "version": "0.10.61.36676",
+              "templateHash": "10307278705301436772"
             }
           },
           "parameters": {
@@ -91,6 +96,12 @@
               "type": "string",
               "metadata": {
                 "description": "Location for resource."
+              }
+            },
+            "language": {
+              "type": "string",
+              "metadata": {
+                "description": "What Language was used to deploy this resource"
               }
             },
             "storageAccountType": {
@@ -119,6 +130,9 @@
               "location": "[parameters('location')]",
               "sku": {
                 "name": "[parameters('storageAccountType')]"
+              },
+              "tags": {
+                "Language": "[parameters('language')]"
               },
               "kind": "StorageV2",
               "properties": {}

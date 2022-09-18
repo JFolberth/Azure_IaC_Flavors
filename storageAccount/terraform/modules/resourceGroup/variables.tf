@@ -7,3 +7,9 @@ variable "resource_group_location" {
   type        = string
   description = "Location the resource group will be deployed to"
 }
+
+variable "language" {
+  type        = string
+  description = "Language used to build the resource"
+}
+

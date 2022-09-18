@@ -8,6 +8,7 @@ return await Pulumi.Deployment.RunAsync(() =>
 {
     var config = new Pulumi.Config();
     var regionReference = new Dictionary<string, string>();
+    var language = "Pulumi";
     regionReference.Add("centralus", "cus");
     regionReference.Add("eastus", "eus");
     regionReference.Add("westus", "wus");
@@ -16,12 +17,16 @@ return await Pulumi.Deployment.RunAsync(() =>
 
     var suffix = config.Require("baseName") + "-" + config.Get("env") + "-" + regionReference[config.Require("location")];
     var resourceGroupName = "rg-" + suffix;
+    
 
     // Create an Azure Resource Group
     var resourceGroup = new ResourceGroup("resourceGroup", new ResourceGroupArgs
     {
         Location = config.Require("location"),
-        ResourceGroupName = resourceGroupName
+        ResourceGroupName = resourceGroupName,
+        Tags = {
+                ["Language"] = language
+            }
     });
 
     // Create an Azure resource (Storage Account)
@@ -29,6 +34,9 @@ return await Pulumi.Deployment.RunAsync(() =>
     {
         ResourceGroupName = resourceGroup.Name,
         AccountName = "sa" + suffix.Replace("-", "").ToLower(),
+        Tags = {
+                ["Language"] = language
+            },
         Location = resourceGroup.Location,
         Sku = new SkuArgs
         {

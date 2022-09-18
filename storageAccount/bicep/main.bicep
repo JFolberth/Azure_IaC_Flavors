@@ -18,11 +18,13 @@ var suffix = '${environmentName}-${regionReference[location]}'
 var shortSufix= '${environmentName}${regionReference[location]}'
 var resourceGroupName = 'rg-${baseName}-${suffix}'
 var storageAccountName = toLower('sa${baseName}${shortSufix}')
+var language = 'Bicep'
 resource resourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' ={
   name: resourceGroupName
   location: location
   tags:{
     Customer: 'FlavorsIaC'
+    Language: language
   }
 }
 
@@ -32,5 +34,6 @@ module storageAccount 'modules/storageAccount.module.bicep' ={
   params:{
     location: location
     storageAccountName: storageAccountName
+    language: language
   }
 }

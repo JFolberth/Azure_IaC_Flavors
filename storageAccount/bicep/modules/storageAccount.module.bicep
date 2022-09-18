@@ -2,6 +2,8 @@
 param storageAccountName string
 @description('Location for resource.')
 param location string
+@description('What Language was used to deploy this resource')
+param language string
 
 @description('Storage Account type')
 @allowed([
@@ -21,6 +23,9 @@ resource sa 'Microsoft.Storage/storageAccounts@2021-06-01' = {
   location: location
   sku: {
     name: storageAccountType
+  }
+  tags:{
+    Language: language
   }
   kind: 'StorageV2'
   properties: {}
