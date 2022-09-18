@@ -31,6 +31,9 @@ variable "region_reference" {
   }
   description = "Object/map that will look up a full qualified region and convert it to an abreviation. Done to drive consistency"
 }
+variable "language" {
+  default = "Terraform"
+}
 
 
 
@@ -38,6 +41,7 @@ module "resourceGroupModule" {
   source                  = "./modules/resourceGroup"
   resource_group_name     = "rg-${var.base_name}-${var.environment_name}-${lookup(var.region_reference, var.resource_group_location, "")}"
   resource_group_location = var.resource_group_location
+  language                = var.language
 }
 
 module "storageAccountModule" {
@@ -45,4 +49,5 @@ module "storageAccountModule" {
   resource_group_name      = module.resourceGroupModule.resource_group_name
   storage_account_location = module.resourceGroupModule.resource_group_location
   storage_account_name     = lower("sa${var.base_name}${var.environment_name}${lookup(var.region_reference, var.resource_group_location, "")}")
+  language                 = var.language
 }
