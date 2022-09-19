@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.10.61.36676",
-      "templateHash": "1606161356006431081"
+      "templateHash": "15578430717780861700"
     }
   },
   "parameters": {
@@ -82,7 +82,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.10.61.36676",
-              "templateHash": "10307278705301436772"
+              "templateHash": "9702551749707801282"
             }
           },
           "parameters": {
@@ -128,6 +128,9 @@
               "apiVersion": "2021-06-01",
               "name": "[parameters('storageAccountName')]",
               "location": "[parameters('location')]",
+              "identity": {
+                "type": "SystemAssigned"
+              },
               "sku": {
                 "name": "[parameters('storageAccountType')]"
               },

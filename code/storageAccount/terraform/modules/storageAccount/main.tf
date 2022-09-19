@@ -7,4 +7,7 @@ resource "azurerm_storage_account" "sa" {
   tags = {
     Language = var.language
   }
+  identity {
+    type = "SystemAssigned"
+  }
 }

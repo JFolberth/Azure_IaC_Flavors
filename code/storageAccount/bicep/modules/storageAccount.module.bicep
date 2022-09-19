@@ -21,6 +21,9 @@ param storageAccountType string = 'Standard_LRS'
 resource sa 'Microsoft.Storage/storageAccounts@2021-06-01' = {
   name: storageAccountName
   location: location
+  identity: {
+    type: 'SystemAssigned'
+  }
   sku: {
     name: storageAccountType
   }
