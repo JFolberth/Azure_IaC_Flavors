@@ -1,5 +1,5 @@
 resource "azurerm_log_analytics_workspace" "log_analytics_workspace" {
-  name                = var.log_analytics_name
+  name                = lower("la-${var.log_analytics_name}")
   location            = var.log_analytics_location
   resource_group_name = var.resource_group_name
   sku                 = "PerGB2018"

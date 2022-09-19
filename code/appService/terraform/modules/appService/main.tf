@@ -1,6 +1,6 @@
 // Note this module will only work for Windows App Service Plans. AzureRM has a seperate provider for linux web apps
 resource "azurerm_windows_web_app" "app_service" {
-  name                = var.app_service_name
+  name                = lower("app-${var.app_service_name}")
   location            = var.app_service_location
   resource_group_name = var.resource_group_name
   tags = {

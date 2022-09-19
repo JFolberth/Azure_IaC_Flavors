@@ -8,7 +8,7 @@ param retentionDays int = 30
 param language string
 
 resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2020-08-01' = {
-  name: logAnalyticsName
+  name: toLower('la-${logAnalyticsName}')
   location: location
   tags: {
     displayName: 'Log Analytics'

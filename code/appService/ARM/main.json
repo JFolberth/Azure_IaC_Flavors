@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.10.61.36676",
-      "templateHash": "7842899470013777756"
+      "templateHash": "12811466118635564704"
     }
   },
   "parameters": {
@@ -37,19 +37,14 @@
       "westus": "wus",
       "westus2": "wus2"
     },
-    "suffix": "[toLower(format('{0}-{1}-{2}', parameters('baseName'), parameters('environmentName'), variables('regionReference')[parameters('location')]))]",
-    "resourceGroupName": "[format('rg-{0}', variables('suffix'))]",
-    "appServicePlanName": "[format('asp-{0}', variables('suffix'))]",
-    "appServiceName": "[format('app-{0}', variables('suffix'))]",
-    "appInsightsName": "[format('ai-{0}', variables('suffix'))]",
-    "logAnalyticsName": "[format('la-{0}', variables('suffix'))]",
+    "nameSuffix": "[toLower(format('{0}-{1}-{2}', parameters('baseName'), parameters('environmentName'), variables('regionReference')[parameters('location')]))]",
     "language": "ARM"
   },
   "resources": [
     {
       "type": "Microsoft.Resources/resourceGroups",
       "apiVersion": "2021-04-01",
-      "name": "[variables('resourceGroupName')]",
+      "name": "[toLower(format('rg-{0}', variables('nameSuffix')))]",
       "location": "[parameters('location')]",
       "tags": {
         "Customer": "FlavorsIaC",
@@ -60,7 +55,7 @@
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2020-10-01",
       "name": "appServicePlanModule",
-      "resourceGroup": "[variables('resourceGroupName')]",
+      "resourceGroup": "[toLower(format('rg-{0}', variables('nameSuffix')))]",
       "properties": {
         "expressionEvaluationOptions": {
           "scope": "inner"
@@ -71,7 +66,7 @@
             "value": "[parameters('location')]"
           },
           "appServicePlanName": {
-            "value": "[variables('appServicePlanName')]"
+            "value": "[variables('nameSuffix')]"
           },
           "language": {
             "value": "[variables('language')]"
@@ -84,7 +79,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.10.61.36676",
-              "templateHash": "16008645719636300553"
+              "templateHash": "8898895798000366640"
             }
           },
           "parameters": {
@@ -157,7 +152,7 @@
             {
               "type": "Microsoft.Web/serverfarms",
               "apiVersion": "2022-03-01",
-              "name": "[parameters('appServicePlanName')]",
+              "name": "[toLower(format('asp-{0}', parameters('appServicePlanName')))]",
               "location": "[parameters('location')]",
               "kind": "[parameters('appServiceKind')]",
               "sku": {
@@ -172,20 +167,20 @@
           "outputs": {
             "appServicePlanID": {
               "type": "string",
-              "value": "[resourceId('Microsoft.Web/serverfarms', parameters('appServicePlanName'))]"
+              "value": "[resourceId('Microsoft.Web/serverfarms', toLower(format('asp-{0}', parameters('appServicePlanName'))))]"
             }
           }
         }
       },
       "dependsOn": [
-        "[subscriptionResourceId('Microsoft.Resources/resourceGroups', variables('resourceGroupName'))]"
+        "[subscriptionResourceId('Microsoft.Resources/resourceGroups', toLower(format('rg-{0}', variables('nameSuffix'))))]"
       ]
     },
     {
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2020-10-01",
       "name": "appServiceModule",
-      "resourceGroup": "[variables('resourceGroupName')]",
+      "resourceGroup": "[toLower(format('rg-{0}', variables('nameSuffix')))]",
       "properties": {
         "expressionEvaluationOptions": {
           "scope": "inner"
@@ -196,13 +191,13 @@
             "value": "[parameters('location')]"
           },
           "appServicePlanID": {
-            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('resourceGroupName')), 'Microsoft.Resources/deployments', 'appServicePlanModule')).outputs.appServicePlanID.value]"
+            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, toLower(format('rg-{0}', variables('nameSuffix')))), 'Microsoft.Resources/deployments', 'appServicePlanModule')).outputs.appServicePlanID.value]"
           },
           "appServiceName": {
-            "value": "[variables('appServiceName')]"
+            "value": "[variables('nameSuffix')]"
           },
           "appInsightsInstrumentationKey": {
-            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('resourceGroupName')), 'Microsoft.Resources/deployments', 'appInsightsModule')).outputs.appInsightsInstrumentationKey.value]"
+            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, toLower(format('rg-{0}', variables('nameSuffix')))), 'Microsoft.Resources/deployments', 'appInsightsModule')).outputs.appInsightsInstrumentationKey.value]"
           },
           "language": {
             "value": "[variables('language')]"
@@ -215,7 +210,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.10.61.36676",
-              "templateHash": "13420738665403720981"
+              "templateHash": "16138593645198631912"
             }
           },
           "parameters": {
@@ -254,7 +249,7 @@
             {
               "type": "Microsoft.Web/sites",
               "apiVersion": "2022-03-01",
-              "name": "[parameters('appServiceName')]",
+              "name": "[toLower(format('app-{0}', parameters('appServiceName')))]",
               "location": "[parameters('location')]",
               "identity": {
                 "type": "SystemAssigned"
@@ -274,28 +269,28 @@
             {
               "type": "Microsoft.Web/sites/config",
               "apiVersion": "2022-03-01",
-              "name": "[format('{0}/{1}', parameters('appServiceName'), 'appsettings')]",
+              "name": "[format('{0}/{1}', toLower(format('app-{0}', parameters('appServiceName'))), 'appsettings')]",
               "properties": {
                 "APPINSIGHTS_INSTRUMENTATIONKEY": "[parameters('appInsightsInstrumentationKey')]"
               },
               "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', parameters('appServiceName'))]"
+                "[resourceId('Microsoft.Web/sites', toLower(format('app-{0}', parameters('appServiceName'))))]"
               ]
             }
           ]
         }
       },
       "dependsOn": [
-        "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('resourceGroupName')), 'Microsoft.Resources/deployments', 'appInsightsModule')]",
-        "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('resourceGroupName')), 'Microsoft.Resources/deployments', 'appServicePlanModule')]",
-        "[subscriptionResourceId('Microsoft.Resources/resourceGroups', variables('resourceGroupName'))]"
+        "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, toLower(format('rg-{0}', variables('nameSuffix')))), 'Microsoft.Resources/deployments', 'appInsightsModule')]",
+        "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, toLower(format('rg-{0}', variables('nameSuffix')))), 'Microsoft.Resources/deployments', 'appServicePlanModule')]",
+        "[subscriptionResourceId('Microsoft.Resources/resourceGroups', toLower(format('rg-{0}', variables('nameSuffix'))))]"
       ]
     },
     {
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2020-10-01",
       "name": "logAnalyticsModule",
-      "resourceGroup": "[variables('resourceGroupName')]",
+      "resourceGroup": "[toLower(format('rg-{0}', variables('nameSuffix')))]",
       "properties": {
         "expressionEvaluationOptions": {
           "scope": "inner"
@@ -306,7 +301,7 @@
             "value": "[parameters('location')]"
           },
           "logAnalyticsName": {
-            "value": "[variables('logAnalyticsName')]"
+            "value": "[variables('nameSuffix')]"
           },
           "language": {
             "value": "[variables('language')]"
@@ -319,7 +314,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.10.61.36676",
-              "templateHash": "10704820288659762609"
+              "templateHash": "4034223215877725501"
             }
           },
           "parameters": {
@@ -353,7 +348,7 @@
             {
               "type": "Microsoft.OperationalInsights/workspaces",
               "apiVersion": "2020-08-01",
-              "name": "[parameters('logAnalyticsName')]",
+              "name": "[toLower(format('la-{0}', parameters('logAnalyticsName')))]",
               "location": "[parameters('location')]",
               "tags": {
                 "displayName": "Log Analytics",
@@ -375,20 +370,20 @@
           "outputs": {
             "logAnalyticsWorkspaceID": {
               "type": "string",
-              "value": "[resourceId('Microsoft.OperationalInsights/workspaces', parameters('logAnalyticsName'))]"
+              "value": "[resourceId('Microsoft.OperationalInsights/workspaces', toLower(format('la-{0}', parameters('logAnalyticsName'))))]"
             }
           }
         }
       },
       "dependsOn": [
-        "[subscriptionResourceId('Microsoft.Resources/resourceGroups', variables('resourceGroupName'))]"
+        "[subscriptionResourceId('Microsoft.Resources/resourceGroups', toLower(format('rg-{0}', variables('nameSuffix'))))]"
       ]
     },
     {
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2020-10-01",
       "name": "appInsightsModule",
-      "resourceGroup": "[variables('resourceGroupName')]",
+      "resourceGroup": "[toLower(format('rg-{0}', variables('nameSuffix')))]",
       "properties": {
         "expressionEvaluationOptions": {
           "scope": "inner"
@@ -399,10 +394,10 @@
             "value": "[parameters('location')]"
           },
           "appInsightsName": {
-            "value": "[variables('appInsightsName')]"
+            "value": "[variables('nameSuffix')]"
           },
           "logAnalyticsWorkspaceID": {
-            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('resourceGroupName')), 'Microsoft.Resources/deployments', 'logAnalyticsModule')).outputs.logAnalyticsWorkspaceID.value]"
+            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, toLower(format('rg-{0}', variables('nameSuffix')))), 'Microsoft.Resources/deployments', 'logAnalyticsModule')).outputs.logAnalyticsWorkspaceID.value]"
           },
           "language": {
             "value": "[variables('language')]"
@@ -415,7 +410,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.10.61.36676",
-              "templateHash": "6412704949701566995"
+              "templateHash": "13062312230309702160"
             }
           },
           "parameters": {
@@ -448,7 +443,7 @@
             {
               "type": "Microsoft.Insights/components",
               "apiVersion": "2020-02-02",
-              "name": "[parameters('appInsightsName')]",
+              "name": "[toLower(format('ai-{0}', parameters('appInsightsName')))]",
               "location": "[parameters('location')]",
               "kind": "string",
               "tags": {
@@ -464,14 +459,14 @@
           "outputs": {
             "appInsightsInstrumentationKey": {
               "type": "string",
-              "value": "[reference(resourceId('Microsoft.Insights/components', parameters('appInsightsName'))).InstrumentationKey]"
+              "value": "[reference(resourceId('Microsoft.Insights/components', toLower(format('ai-{0}', parameters('appInsightsName'))))).InstrumentationKey]"
             }
           }
         }
       },
       "dependsOn": [
-        "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('resourceGroupName')), 'Microsoft.Resources/deployments', 'logAnalyticsModule')]",
-        "[subscriptionResourceId('Microsoft.Resources/resourceGroups', variables('resourceGroupName'))]"
+        "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, toLower(format('rg-{0}', variables('nameSuffix')))), 'Microsoft.Resources/deployments', 'logAnalyticsModule')]",
+        "[subscriptionResourceId('Microsoft.Resources/resourceGroups', toLower(format('rg-{0}', variables('nameSuffix'))))]"
       ]
     }
   ]

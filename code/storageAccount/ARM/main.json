@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.10.61.36676",
-      "templateHash": "15578430717780861700"
+      "templateHash": "6078318518771254026"
     }
   },
   "parameters": {
@@ -37,10 +37,8 @@
       "westus": "wus",
       "westus2": "wus2"
     },
-    "suffix": "[format('{0}-{1}', parameters('environmentName'), variables('regionReference')[parameters('location')])]",
-    "shortSufix": "[format('{0}{1}', parameters('environmentName'), variables('regionReference')[parameters('location')])]",
-    "resourceGroupName": "[format('rg-{0}-{1}', parameters('baseName'), variables('suffix'))]",
-    "storageAccountName": "[toLower(format('sa{0}{1}', parameters('baseName'), variables('shortSufix')))]",
+    "nameSuffix": "[format('{0}-{1}-{2}', parameters('baseName'), parameters('environmentName'), variables('regionReference')[parameters('location')])]",
+    "resourceGroupName": "[format('rg-{0}', variables('nameSuffix'))]",
     "language": "ARM"
   },
   "resources": [
@@ -69,7 +67,7 @@
             "value": "[parameters('location')]"
           },
           "storageAccountName": {
-            "value": "[variables('storageAccountName')]"
+            "value": "[variables('nameSuffix')]"
           },
           "language": {
             "value": "[variables('language')]"
@@ -82,7 +80,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.10.61.36676",
-              "templateHash": "9702551749707801282"
+              "templateHash": "6341193605553127306"
             }
           },
           "parameters": {
@@ -126,7 +124,7 @@
             {
               "type": "Microsoft.Storage/storageAccounts",
               "apiVersion": "2021-06-01",
-              "name": "[parameters('storageAccountName')]",
+              "name": "[toLower(replace(format('sa{0}', parameters('storageAccountName')), '-', ''))]",
               "location": "[parameters('location')]",
               "identity": {
                 "type": "SystemAssigned"

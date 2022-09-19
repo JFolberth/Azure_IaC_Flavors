@@ -15,7 +15,7 @@ return await Pulumi.Deployment.RunAsync(() =>
     regionReference.Add("westus2", "wus2");
 
 
-    var suffix = config.Require("baseName") + "-" + config.Get("env") + "-" + regionReference[config.Require("location")];
+    var name_suffix = config.Require("baseName") + "-" + config.Get("env") + "-" + regionReference[config.Require("location")];
     var resourceGroupName = "rg-" + suffix;
     
 
@@ -33,7 +33,7 @@ return await Pulumi.Deployment.RunAsync(() =>
     var storageAccount = new StorageAccount("sa", new StorageAccountArgs
     {
         ResourceGroupName = resourceGroup.Name,
-        AccountName = "sa" + suffix.Replace("-", "").ToLower(),
+        AccountName = "sa" + name_suffix.Replace("-", "").ToLower(),
         Tags = {
                 ["Language"] = language
             },

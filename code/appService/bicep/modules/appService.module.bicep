@@ -11,7 +11,7 @@ param language string
 
 
 resource appService 'Microsoft.Web/sites@2022-03-01' = {
-  name: appServiceName
+  name: toLower('app-${appServiceName}')
   location: location
   identity: {
     type: 'SystemAssigned'
