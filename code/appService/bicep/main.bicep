@@ -1,7 +1,7 @@
 @description('Location for all resources.')
 param location string
 @description('Base name that will appear for all resources.') 
-param baseName string = 'iacflavorsASP'
+param baseName string = 'iacflavorsbicepASP'
 @description('Three leter environment abreviation to denote environment that will appear in all resource names') 
 param environmentName string = 'dev'
 

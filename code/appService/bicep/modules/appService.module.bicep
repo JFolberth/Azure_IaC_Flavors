@@ -9,6 +9,7 @@ param appInsightsInstrumentationKey string
 @description('What Language was used to deploy this resource')
 param language string
 
+
 resource appService 'Microsoft.Web/sites@2022-03-01' = {
   name: appServiceName
   location: location
@@ -35,33 +36,3 @@ resource appServiceLogging 'Microsoft.Web/sites/config@2022-03-01' = {
     APPINSIGHTS_INSTRUMENTATIONKEY: appInsightsInstrumentationKey
   }
 }
-
-resource appServiceAppSettings 'Microsoft.Web/sites/config@2022-03-01' = {
-  parent: appService
-  name: 'logs'
-  properties: {
-    applicationLogs: {
-      fileSystem: {
-        level: 'Warning'
-      }
-    }
-    httpLogs: {
-      fileSystem: {
-        retentionInMb: 40
-        enabled: true
-      }
-    }
-    failedRequestsTracing: {
-      enabled: true
-    }
-    detailedErrorMessages: {
-      enabled: true
-    }
-  }
-}
-
-resource appServiceSiteExtension 'Microsoft.Web/sites/siteextensions@2022-03-01' = {
-  parent: appService
-  name: 'Microsoft.ApplicationInsights.AzureWebSites'
-}
-
