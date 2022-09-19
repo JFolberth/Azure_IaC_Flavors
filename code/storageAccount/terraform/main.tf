@@ -35,19 +35,22 @@ variable "language" {
   default = "Terraform"
 }
 
+locals {
+  name_suffix = "${var.base_name}-${var.environment_name}-${lookup(var.region_reference, var.resource_group_location, "")}"
+}
 
 
-module "resourceGroupModule" {
+module "resource_group_module" {
   source                  = "./modules/resourceGroup"
-  resource_group_name     = "rg-${var.base_name}-${var.environment_name}-${lookup(var.region_reference, var.resource_group_location, "")}"
+  resource_group_name     = "rg-${local.name_suffix}"
   resource_group_location = var.resource_group_location
   language                = var.language
 }
 
-module "storageAccountModule" {
+module "storate_account_module" {
   source                   = "./modules/storageAccount"
-  resource_group_name      = module.resourceGroupModule.resource_group_name
-  storage_account_location = module.resourceGroupModule.resource_group_location
-  storage_account_name     = lower("sa${var.base_name}${var.environment_name}${lookup(var.region_reference, var.resource_group_location, "")}")
+  resource_group_name      = module.resource_group_module.resource_group_name
+  storage_account_location = module.resource_group_module.resource_group_location
+  storage_account_name     = lower("sa${replace(local.name_suffix, "-", "")}")
   language                 = var.language
 }
