@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.10.61.36676",
-      "templateHash": "18190987594600295208"
+      "templateHash": "7842899470013777756"
     }
   },
   "parameters": {
@@ -17,7 +17,7 @@
     },
     "baseName": {
       "type": "string",
-      "defaultValue": "iacflavorsASP",
+      "defaultValue": "iacflavorsbicepASP",
       "metadata": {
         "description": "Base name that will appear for all resources."
       }
@@ -202,7 +202,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.10.61.36676",
-              "templateHash": "1548931878258844276"
+              "templateHash": "13420738665403720981"
             }
           },
           "parameters": {
@@ -265,41 +265,6 @@
               "properties": {
                 "APPINSIGHTS_INSTRUMENTATIONKEY": "[parameters('appInsightsInstrumentationKey')]"
               },
-              "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', parameters('appServiceName'))]"
-              ]
-            },
-            {
-              "type": "Microsoft.Web/sites/config",
-              "apiVersion": "2022-03-01",
-              "name": "[format('{0}/{1}', parameters('appServiceName'), 'logs')]",
-              "properties": {
-                "applicationLogs": {
-                  "fileSystem": {
-                    "level": "Warning"
-                  }
-                },
-                "httpLogs": {
-                  "fileSystem": {
-                    "retentionInMb": 40,
-                    "enabled": true
-                  }
-                },
-                "failedRequestsTracing": {
-                  "enabled": true
-                },
-                "detailedErrorMessages": {
-                  "enabled": true
-                }
-              },
-              "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', parameters('appServiceName'))]"
-              ]
-            },
-            {
-              "type": "Microsoft.Web/sites/siteextensions",
-              "apiVersion": "2022-03-01",
-              "name": "[format('{0}/{1}', parameters('appServiceName'), 'Microsoft.ApplicationInsights.AzureWebSites')]",
               "dependsOn": [
                 "[resourceId('Microsoft.Web/sites', parameters('appServiceName'))]"
               ]
