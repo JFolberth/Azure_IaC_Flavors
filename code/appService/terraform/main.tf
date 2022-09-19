@@ -39,9 +39,6 @@ locals {
   name_suffix = "${var.base_name}-${var.environment_name}-${lookup(var.region_reference, var.resource_group_location, "")}"
 }
 
-
-
-
 module "resource_group_module" {
   source                  = "./modules/resourceGroup"
   resource_group_name     = "rg-${local.name_suffix}"
