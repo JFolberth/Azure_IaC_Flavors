@@ -6,6 +6,9 @@ resource "azurerm_windows_web_app" "app_service" {
   tags = {
     Language = var.language
   }
+  identity {
+    type = "SystemAssigned"
+  }
   service_plan_id = var.service_plan_id
   https_only      = true
   app_settings = {

@@ -42,7 +42,10 @@ return await Pulumi.Deployment.RunAsync(() =>
         {
             Name = config.Require("storageAccountSKU")
         },
-        Kind = Kind.StorageV2
+        Kind = Kind.StorageV2,
+        Identity = new IdentityArgs {
+            Type = "SystemAssigned"
+        }
     });
 
 });
