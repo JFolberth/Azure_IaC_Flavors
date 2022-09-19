@@ -41,7 +41,7 @@ locals {
 
 module "resource_group_module" {
   source                  = "./modules/resourceGroup"
-  resource_group_name     = "rg-${local.name_suffix}"
+  resource_group_name     = local.name_suffix
   resource_group_location = var.resource_group_location
   language                = var.language
 }
@@ -50,7 +50,7 @@ module "service_plan_module" {
   source                = "./modules/appServicePlan"
   resource_group_name   = module.resource_group_module.resource_group_name
   service_plan_location = module.resource_group_module.resource_group_location
-  service_plan_name     = lower("asp-${local.name_suffix}")
+  service_plan_name     = local.name_suffix
   language              = var.language
 }
 
@@ -58,7 +58,7 @@ module "log_analytics_module" {
   source                 = "./modules/logAnalytics"
   resource_group_name    = module.resource_group_module.resource_group_name
   log_analytics_location = module.resource_group_module.resource_group_location
-  log_analytics_name     = lower("la-${local.name_suffix}")
+  log_analytics_name     = local.name_suffix
   language               = var.language
 }
 
@@ -66,7 +66,7 @@ module "app_insights_module" {
   source                     = "./modules/appInsights"
   resource_group_name        = module.resource_group_module.resource_group_name
   app_insights_location      = module.resource_group_module.resource_group_location
-  app_insights_name          = lower("ai-${local.name_suffix}")
+  app_insights_name          = local.name_suffix
   language                   = var.language
   log_analytics_workspace_id = module.log_analytics_module.log_analytics_workspace_id
 }
@@ -75,7 +75,7 @@ module "app_service_module" {
   source                           = "./modules/appService"
   resource_group_name              = module.resource_group_module.resource_group_name
   app_service_location             = module.resource_group_module.resource_group_location
-  app_service_name                 = lower("app-${local.name_suffix}")
+  app_service_name                 = local.name_suffix
   language                         = var.language
   app_insights_instrumentation_key = module.app_insights_module.instrumentation_key
   service_plan_id                  = module.service_plan_module.service_plan_id

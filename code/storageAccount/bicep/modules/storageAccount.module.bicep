@@ -19,7 +19,7 @@ param language string
 param storageAccountType string = 'Standard_LRS'
 
 resource sa 'Microsoft.Storage/storageAccounts@2021-06-01' = {
-  name: storageAccountName
+  name: toLower(replace('sa${storageAccountName}','-',''))
   location: location
   identity: {
     type: 'SystemAssigned'

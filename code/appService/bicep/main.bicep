@@ -14,16 +14,15 @@ var regionReference = {
   westus: 'wus'
   westus2: 'wus2'
 }
-var suffix = toLower('${baseName}-${environmentName}-${regionReference[location]}')
-var resourceGroupName = 'rg-${suffix}'
-var appServicePlanName = 'asp-${suffix}'
-var appServiceName = 'app-${suffix}'
-var appInsightsName = 'ai-${suffix}'
-var logAnalyticsName = 'la-${suffix}'
+var nameSuffix = toLower('${baseName}-${environmentName}-${regionReference[location]}')
 var language = 'Bicep'
 
+/* Since we are mismatching scopes with a deployment at subscription and resource at resource group
+ the main.bicep requires a resource Group deployed at the subscription scope, all modules will be at the resource Group Scop
+ */
+
 resource resourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' ={
-  name: resourceGroupName
+  name: toLower('rg-${nameSuffix}')
   location: location
   tags:{
     Customer: 'FlavorsIaC'
@@ -36,7 +35,7 @@ module appServicePlan 'modules/appServicePlan.module.bicep' ={
   scope: resourceGroup
   params:{
     location: location
-    appServicePlanName: appServicePlanName
+    appServicePlanName: nameSuffix
     language: language
   }
 }
@@ -47,7 +46,7 @@ module appService 'modules/appService.module.bicep' ={
   params:{
     location: location
     appServicePlanID: appServicePlan.outputs.appServicePlanID
-    appServiceName: appServiceName
+    appServiceName: nameSuffix
     appInsightsInstrumentationKey: appInsights.outputs.appInsightsInstrumentationKey
     language: language
   }
@@ -58,7 +57,7 @@ module logAnalytics 'modules/logAnalytics.module.bicep' ={
   scope: resourceGroup
   params:{
     location: location
-    logAnalyticsName: logAnalyticsName
+    logAnalyticsName: nameSuffix
     language: language
   }
 }
@@ -68,7 +67,7 @@ module appInsights 'modules/appInsights.module.bicep' ={
   scope: resourceGroup
   params:{
     location: location
-    appInsightsName: appInsightsName
+    appInsightsName: nameSuffix
     logAnalyticsWorkspaceID: logAnalytics.outputs.logAnalyticsWorkspaceID
     language: language
   }

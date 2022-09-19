@@ -42,7 +42,7 @@ locals {
 
 module "resource_group_module" {
   source                  = "./modules/resourceGroup"
-  resource_group_name     = "rg-${local.name_suffix}"
+  resource_group_name     = local.name_suffix
   resource_group_location = var.resource_group_location
   language                = var.language
 }
@@ -51,6 +51,6 @@ module "storate_account_module" {
   source                   = "./modules/storageAccount"
   resource_group_name      = module.resource_group_module.resource_group_name
   storage_account_location = module.resource_group_module.resource_group_location
-  storage_account_name     = lower("sa${replace(local.name_suffix, "-", "")}")
+  storage_account_name     = local.name_suffix
   language                 = var.language
 }

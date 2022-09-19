@@ -14,11 +14,13 @@ var regionReference = {
   westus: 'wus'
   westus2: 'wus2'
 }
-var suffix = '${environmentName}-${regionReference[location]}'
-var shortSufix= '${environmentName}${regionReference[location]}'
-var resourceGroupName = 'rg-${baseName}-${suffix}'
-var storageAccountName = toLower('sa${baseName}${shortSufix}')
+var nameSuffix = '${baseName}-${environmentName}-${regionReference[location]}'
+var resourceGroupName = 'rg-${nameSuffix}'
+
 var language = 'Bicep'
+/* Since we are mismatching scopes with a deployment at subscription and resource at resource group
+ the main.bicep requires a resource Group deployed at the subscription scope, all modules will be at the resource Group Scop
+ */
 resource resourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' ={
   name: resourceGroupName
   location: location
@@ -33,7 +35,7 @@ module storageAccount 'modules/storageAccount.module.bicep' ={
   scope: resourceGroup
   params:{
     location: location
-    storageAccountName: storageAccountName
+    storageAccountName: nameSuffix
     language: language
   }
 }
