@@ -33,11 +33,16 @@ param language string
   'WS2' 
   'WS3'
 ])
-param appServicePlanSKU string = 'F1'
+param appServicePlanSKU string = 'D1'
+
+@description('AppService Plan Kind')
+@allowed(['windows','linux','windowscontainer'])
+param appServiceKind string = 'windows'
 
 resource appServicePlan 'Microsoft.Web/serverfarms@2022-03-01' = {
   name: appServicePlanName
   location: location
+  kind: appServiceKind
   sku: {
     name: appServicePlanSKU
   }
