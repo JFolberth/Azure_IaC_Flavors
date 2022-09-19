@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.10.61.36676",
-      "templateHash": "18190987594600295208"
+      "templateHash": "5226955489418252680"
     }
   },
   "parameters": {
@@ -84,7 +84,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.10.61.36676",
-              "templateHash": "10524557879967953453"
+              "templateHash": "16008645719636300553"
             }
           },
           "parameters": {
@@ -108,7 +108,7 @@
             },
             "appServicePlanSKU": {
               "type": "string",
-              "defaultValue": "F1",
+              "defaultValue": "D1",
               "allowedValues": [
                 "B1",
                 "B2",
@@ -139,6 +139,18 @@
               "metadata": {
                 "description": "AppService Plan Sku"
               }
+            },
+            "appServiceKind": {
+              "type": "string",
+              "defaultValue": "windows",
+              "allowedValues": [
+                "windows",
+                "linux",
+                "windowscontainer"
+              ],
+              "metadata": {
+                "description": "AppService Plan Kind"
+              }
             }
           },
           "resources": [
@@ -147,6 +159,7 @@
               "apiVersion": "2022-03-01",
               "name": "[parameters('appServicePlanName')]",
               "location": "[parameters('location')]",
+              "kind": "[parameters('appServiceKind')]",
               "sku": {
                 "name": "[parameters('appServicePlanSKU')]"
               },
