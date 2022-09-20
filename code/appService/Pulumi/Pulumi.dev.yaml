@@ -1,0 +1,6 @@
+config:
+  AzureIaCFlavorsASP:location: eastus
+  AzureIaCFlavorsASP:env: dev
+  AzureIaCFlavorsASP:baseName: flavorpulumiasp
+  AzureIaCFlavorsASP:appSeviceKind: Windows
+  AzureIaCFlavorsASP:logAnalyticsRetentionDays: 30

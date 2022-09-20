@@ -1,0 +1,3 @@
+name: AzureIaCFlavorsASP
+description: App Service project from Azure Flavors of IaC.
+runtime: dotnet
