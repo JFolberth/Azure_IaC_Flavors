@@ -42,7 +42,7 @@ return await Pulumi.Deployment.RunAsync(() =>
             ResourceGroupName = resourceGroup.Name,
             Sku = new SkuDescriptionArgs
             {
-                Name = "D1",
+                Name = config.Require("appServicePlanSKU")
             },
             Tags = {
                 ["Language"] = language
