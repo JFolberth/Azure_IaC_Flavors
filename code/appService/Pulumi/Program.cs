@@ -76,7 +76,7 @@ return await Pulumi.Deployment.RunAsync(() =>
                 ["Language"] = language
             },
         });
-    var app = new WebApp("app", new WebAppArgs
+    var appService = new WebApp("appService", new WebAppArgs
         {   Name = "wapp-" + nameSuffix,
             ResourceGroupName = resourceGroup.Name,
             ServerFarmId = appServicePlan.Id,
