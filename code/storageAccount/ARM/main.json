@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.10.61.36676",
-      "templateHash": "6078318518771254026"
+      "templateHash": "13381582476735859079"
     }
   },
   "parameters": {
@@ -28,6 +28,13 @@
       "metadata": {
         "description": "Three leter environment abreviation to denote environment that will appear in all resource names"
       }
+    },
+    "storageAccountType": {
+      "type": "string",
+      "defaultValue": "Standard_LRS",
+      "metadata": {
+        "description": "Storage Account type"
+      }
     }
   },
   "variables": {
@@ -39,7 +46,7 @@
     },
     "nameSuffix": "[format('{0}-{1}-{2}', parameters('baseName'), parameters('environmentName'), variables('regionReference')[parameters('location')])]",
     "resourceGroupName": "[format('rg-{0}', variables('nameSuffix'))]",
-    "language": "ARM"
+    "language": "Bicep"
   },
   "resources": [
     {
@@ -71,6 +78,9 @@
           },
           "language": {
             "value": "[variables('language')]"
+          },
+          "storageAccountType": {
+            "value": "[parameters('storageAccountType')]"
           }
         },
         "template": {

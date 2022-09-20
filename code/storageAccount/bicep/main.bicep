@@ -4,6 +4,8 @@ param location string
 param baseName string = 'flavorsiacbicep'
 @description('Three leter environment abreviation to denote environment that will appear in all resource names') 
 param environmentName string = 'dev'
+@description('Storage Account type')
+param storageAccountType string = 'Standard_LRS'
 
 
 targetScope = 'subscription'
@@ -37,5 +39,6 @@ module storageAccount 'modules/storageAccount.module.bicep' ={
     location: location
     storageAccountName: nameSuffix
     language: language
+    storageAccountType: storageAccountType
   }
 }

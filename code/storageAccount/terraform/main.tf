@@ -22,6 +22,12 @@ variable "environment_name" {
 variable "resource_group_location" {
   description = "The azure location the resource gorup will be deployed to"
 }
+variable "storage_account_tier" {
+  description = "Storage Account will be Standard or Premium"
+}
+variable "storage_account_replication_type" {
+  description = "What type of replication will be required for the Storage Account"
+}
 variable "region_reference" {
   default = {
     centralus = "cus"
@@ -47,10 +53,12 @@ module "resource_group_module" {
   language                = var.language
 }
 
-module "storate_account_module" {
+module "storage_account_module" {
   source                   = "./modules/storageAccount"
   resource_group_name      = module.resource_group_module.resource_group_name
   storage_account_location = module.resource_group_module.resource_group_location
   storage_account_name     = local.name_suffix
   language                 = var.language
+  storage_account_replication_type = var.storage_account_replication_type
+  storage_account_tier    = var.storage_account_tier
 }
