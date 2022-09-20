@@ -3,4 +3,5 @@ config:
   AzureIaCFlavorsASP:env: dev
   AzureIaCFlavorsASP:baseName: flavorpulumiasp
   AzureIaCFlavorsASP:appSeviceKind: Windows
+  AzureIaCFlavorsASP:appServicePlanSKU: D1
   AzureIaCFlavorsASP:logAnalyticsRetentionDays: 30
