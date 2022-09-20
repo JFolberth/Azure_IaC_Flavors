@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.10.61.36676",
-      "templateHash": "12811466118635564704"
+      "templateHash": "2746624318943497695"
     }
   },
   "parameters": {
@@ -28,6 +28,18 @@
       "metadata": {
         "description": "Three leter environment abreviation to denote environment that will appear in all resource names"
       }
+    },
+    "appServicePlanSKU": {
+      "type": "string",
+      "metadata": {
+        "description": "AppService Plan Sku"
+      }
+    },
+    "retentionDays": {
+      "type": "int",
+      "metadata": {
+        "description": "How Many Day to retain Log Analytics Logs"
+      }
     }
   },
   "variables": {
@@ -38,7 +50,7 @@
       "westus2": "wus2"
     },
     "nameSuffix": "[toLower(format('{0}-{1}-{2}', parameters('baseName'), parameters('environmentName'), variables('regionReference')[parameters('location')]))]",
-    "language": "ARM"
+    "language": "Bicep"
   },
   "resources": [
     {
@@ -70,6 +82,9 @@
           },
           "language": {
             "value": "[variables('language')]"
+          },
+          "appServicePlanSKU": {
+            "value": "[parameters('appServicePlanSKU')]"
           }
         },
         "template": {
@@ -305,6 +320,9 @@
           },
           "language": {
             "value": "[variables('language')]"
+          },
+          "retentionDays": {
+            "value": "[parameters('retentionDays')]"
           }
         },
         "template": {
