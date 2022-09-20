@@ -4,6 +4,10 @@ param location string
 param baseName string = 'iacflavorsbicepASP'
 @description('Three leter environment abreviation to denote environment that will appear in all resource names') 
 param environmentName string = 'dev'
+@description('AppService Plan Sku')
+param appServicePlanSKU string
+@description('How Many Day to retain Log Analytics Logs')
+param retentionDays int
 
 
 targetScope = 'subscription'
@@ -37,6 +41,7 @@ module appServicePlan 'modules/appServicePlan.module.bicep' ={
     location: location
     appServicePlanName: nameSuffix
     language: language
+    appServicePlanSKU: appServicePlanSKU
   }
 }
 
@@ -59,6 +64,7 @@ module logAnalytics 'modules/logAnalytics.module.bicep' ={
     location: location
     logAnalyticsName: nameSuffix
     language: language
+    retentionDays: retentionDays
   }
 }
 

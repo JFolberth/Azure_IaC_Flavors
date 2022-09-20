@@ -22,6 +22,12 @@ variable "environment_name" {
 variable "resource_group_location" {
   description = "The azure location the resource gorup will be deployed to"
 }
+variable "service_plan_sku_name" {
+  description = "SKU for the App Service Plan"
+}
+variable "log_analytics_retention_days" {
+  description = "Numbber of days to retain logs"
+}
 variable "region_reference" {
   default = {
     centralus = "cus"
@@ -52,6 +58,7 @@ module "service_plan_module" {
   service_plan_location = module.resource_group_module.resource_group_location
   service_plan_name     = local.name_suffix
   language              = var.language
+  service_plan_sku_name = var.service_plan_sku_name
 }
 
 module "log_analytics_module" {
@@ -60,6 +67,7 @@ module "log_analytics_module" {
   log_analytics_location = module.resource_group_module.resource_group_location
   log_analytics_name     = local.name_suffix
   language               = var.language
+  log_analytics_retention_days = var.log_analytics_retention_days
 }
 
 module "app_insights_module" {
@@ -79,4 +87,6 @@ module "app_service_module" {
   language                         = var.language
   app_insights_instrumentation_key = module.app_insights_module.instrumentation_key
   service_plan_id                  = module.service_plan_module.service_plan_id
+  service_plan_sku_name = var.service_plan_sku_name
+
 }

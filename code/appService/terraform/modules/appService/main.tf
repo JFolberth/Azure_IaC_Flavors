@@ -17,7 +17,7 @@ resource "azurerm_windows_web_app" "app_service" {
 
   site_config {
     //Terraform by default has this set to True. Incompatiable with some SKUs
-    always_on = false
+    always_on =  var.service_plan_sku_name == "D1" ? false : true
   }
 }
 
