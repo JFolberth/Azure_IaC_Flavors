@@ -17,7 +17,7 @@
     },
     "baseName": {
       "type": "string",
-      "defaultValue": "flavorsiacbicep",
+      "defaultValue": "flavorsiacarm",
       "metadata": {
         "description": "Base name that will appear for all resources."
       }
@@ -46,7 +46,7 @@
     },
     "nameSuffix": "[format('{0}-{1}-{2}', parameters('baseName'), parameters('environmentName'), variables('regionReference')[parameters('location')])]",
     "resourceGroupName": "[format('rg-{0}', variables('nameSuffix'))]",
-    "language": "Bicep"
+    "language": "ARM"
   },
   "resources": [
     {

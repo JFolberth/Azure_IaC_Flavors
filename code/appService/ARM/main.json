@@ -17,7 +17,7 @@
     },
     "baseName": {
       "type": "string",
-      "defaultValue": "iacflavorsbicepASP",
+      "defaultValue": "iacflavorsARMASP",
       "metadata": {
         "description": "Base name that will appear for all resources."
       }
@@ -50,7 +50,7 @@
       "westus2": "wus2"
     },
     "nameSuffix": "[toLower(format('{0}-{1}-{2}', parameters('baseName'), parameters('environmentName'), variables('regionReference')[parameters('location')]))]",
-    "language": "Bicep"
+    "language": "ARM"
   },
   "resources": [
     {
