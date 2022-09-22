@@ -7,7 +7,7 @@ Every resource within Azure, no matter how it is deployed, will have a resource 
 - It is JSON file, not a programming language
 - Explicitly call out any dependency between templates or resources
 - Any Export Resource button in Azure will product an ARM template
-- Day 1 support for any Azure resources, even those in private preview
+- Day 0 support for any Azure resources, even those in private preview
 - Azure specific
 - Easily declare individual Azure Resource provider API versions
 - No state file
