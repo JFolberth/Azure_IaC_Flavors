@@ -6,7 +6,7 @@ Bicep is a DSL created and maintained by Microsoft starting with v 0.3 onward. B
 - There is no state file
 - Anything achievable in ARM can be done in Bicep
 - Bicep is released monthly
-- Day 1 support for any Azure resources, even those in private preview
+- Day 0 support for any Azure resources, even those in private preview
 - Azure is only provider available
 - Easily declare individual Azure Resource provider API versions
 
