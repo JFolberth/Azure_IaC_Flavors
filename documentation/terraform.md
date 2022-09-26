@@ -38,7 +38,7 @@ For this repository just need to make sure the terminal is under the correct fol
 # Validating Changes
 Since Terraform depends on a state file to contain a definition of the resources associated with the Terraform file it does a really good job at detecting any changes.
 
-This is done via [`terraform plan`](terraform.io/cli/commands/plan)
+This is done via [`terraform plan`](https://www.terraform.io/cli/commands/plan)
 
 For this repo it will look like:
 `terraform plan -var-file="variables/dev.eus.variables.tfvars" ` 
