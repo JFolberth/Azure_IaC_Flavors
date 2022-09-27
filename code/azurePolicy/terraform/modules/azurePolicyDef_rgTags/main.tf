@@ -1,10 +1,10 @@
- 
- resource "azurerm_policy_definition" "azure_policy_definition" {
-   name         = "required resource group tags - ${var.environment_name}"
-   policy_type  = "Custom"
-   mode         = "Indexed"
-   display_name = "${var.environment_name} - Policy Definition for required tags on Azure Resource Group Names"
-   metadata = <<METADATA
+
+resource "azurerm_policy_definition" "azure_policy_definition" {
+  name         = "required resource group tags - ${var.environment_name}"
+  policy_type  = "Custom"
+  mode         = "Indexed"
+  display_name = "${var.name_suffix} - ${var.environment_name} - Policy Definition for required tags on Azure Resource Group Names"
+  metadata     = <<METADATA
      {
        "version": "1.0.0",
        "category": "Tags"
@@ -57,4 +57,4 @@ POLICY_RULE
       }
   }
 PARAMETERS
- }
+}

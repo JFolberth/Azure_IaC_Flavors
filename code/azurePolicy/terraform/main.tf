@@ -47,15 +47,16 @@ data "azurerm_subscription" "current" {
 }
 
 module "resource_group_required_tag_definition_module" {
-    source                  = "./modules/azurePolicyDef_rgTags"
-environment_name = var.environment_name
+  source           = "./modules/azurePolicyDef_rgTags"
+  environment_name = var.environment_name
+  name_suffix      = local.name_suffix
 }
 
 
 resource "azurerm_subscription_policy_assignment" "assign_rg_required_tags_module" {
-  for_each=  var.required_tags
+  for_each             = var.required_tags
   name                 = "Assign Required Tags ${each.value.tagName} - ${local.name_suffix}"
-  subscription_id                 = data.azurerm_subscription.current.id
+  subscription_id      = data.azurerm_subscription.current.id
   policy_definition_id = module.resource_group_required_tag_definition_module.azure_policy_id_reource_group_required_tags
   description          = "Policy Assignment created for Required Tag ${each.value.tagName} set by ${local.name_suffix}"
   display_name         = "Required Tag ${each.value.tagName}"
