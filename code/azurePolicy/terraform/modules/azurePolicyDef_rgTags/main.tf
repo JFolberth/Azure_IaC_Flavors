@@ -22,6 +22,10 @@ resource "azurerm_policy_definition" "azure_policy_definition" {
           {
             "field": "[concat('tags[', parameters('tagName'), ']')]",
             "exists": "false"
+          },
+                    {
+            "field": "[concat('tags[', parameters('tagName2'), ']')]",
+            "exists": "false"
           }
         ]
       },
@@ -42,6 +46,12 @@ POLICY_RULE
           "description": "Name of the tag, such as 'owner'"
         }
       },
+                  "tagName2": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Tag Required",
+          "description": "Name of the tag, such as 'owner'"
+        },
               "tagPolicyEffect": {
  "type": "String",
                  "metadata": {
