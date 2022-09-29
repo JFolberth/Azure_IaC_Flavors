@@ -2,7 +2,7 @@
 param storageAccountName string
 @description('Location for resource.')
 param location string
-@description('What Language was used to deploy this resource')
+@description('What language was used to deploy this resource')
 param language string
 
 @description('Storage Account type')
