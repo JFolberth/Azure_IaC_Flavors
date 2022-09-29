@@ -27,5 +27,5 @@ variable "service_plan_id" {
 
 variable "service_plan_sku_name" {
   type        = string
-  description = "SKU for the App Service Plan, needed to deterime appropriate settings"
+  description = "SKU for the App Service Plan, needed to determine appropriate settings"
 }

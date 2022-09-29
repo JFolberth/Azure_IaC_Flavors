@@ -10,7 +10,7 @@ variable "log_analytics_location" {
 
 variable "log_analytics_name" {
   type        = string
-  description = "Name for the instnace of Log Analytics Workspace "
+  description = "Name for the instance of Log Analytics Workspace"
 }
 variable "language" {
   type        = string
@@ -19,6 +19,6 @@ variable "language" {
 
 variable "log_analytics_retention_days" {
   type        = number
-  description = "Numbber of days to retain logs"
+  description = "Number of days to retain logs"
   default     = 30
 }

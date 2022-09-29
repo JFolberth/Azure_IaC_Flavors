@@ -10,7 +10,7 @@ variable "app_insights_location" {
 
 variable "app_insights_name" {
   type        = string
-  description = "Name for the instnace of App Insights"
+  description = "Name for the instance of App Insights"
 }
 variable "language" {
   type        = string
