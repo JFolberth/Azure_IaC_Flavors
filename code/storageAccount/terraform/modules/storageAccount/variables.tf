@@ -19,7 +19,7 @@ variable "storage_account_tier" {
   default = "Standard"
   validation {
     condition     = contains(["Standard", "Premium"], var.storage_account_tier)
-    error_message = "Please provide a valide SKU for the stroage account"
+    error_message = "Please provide a valid SKU for the stroage account"
   }
 }
 
@@ -29,7 +29,7 @@ variable "storage_account_replication_type" {
   description = "Required by the provider to indicate what replication type"
   validation {
     condition     = contains(["LRS", "GRS", "RAGRS", "ZRS", "GZRS", "RAGZRS"], var.storage_account_replication_type)
-    error_message = "Please provide a valide replication type for the stroage account"
+    error_message = "Please provide a valide replication type for the storage account"
   }
 }
 
