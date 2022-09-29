@@ -4,7 +4,7 @@ param appInsightsName string
 param location string
 @description('Log Analytics Workspace ID to send App Insights Log To')
 param logAnalyticsWorkspaceID string
-@description('What Language was used to deploy this resource')
+@description('What language was used to deploy this resource')
 param language string
 
 
