@@ -1,6 +1,6 @@
 using Pulumi;
 using Pulumi.AzureNative.Resources;
-//Pinning the provider since existing provider does not support app insights to Log Analytics
+//Pinning the provider since existing provider does not support App Insights to Log Analytics
 using Pulumi.AzureNative.Insights.V20200202;
 using Pulumi.AzureNative.Web;
 using Pulumi.AzureNative.Web.Inputs;
@@ -97,7 +97,7 @@ return await Pulumi.Deployment.RunAsync(() =>
             },
             Identity = new ManagedServiceIdentityArgs 
             {
-                //Need to explicit here since ManagedServiceIdentity Type is a property of both .Web and .Resources
+                //Need to be explicit here since ManagedServiceIdentity Type is a property of both .Web and .Resources
                 Type = Pulumi.AzureNative.Web.ManagedServiceIdentityType.SystemAssigned
             }
         });
