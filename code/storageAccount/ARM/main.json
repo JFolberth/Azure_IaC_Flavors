@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.10.61.36676",
-      "templateHash": "13381582476735859079"
+      "templateHash": "17595541716482670413"
     }
   },
   "parameters": {
@@ -26,7 +26,7 @@
       "type": "string",
       "defaultValue": "dev",
       "metadata": {
-        "description": "Three leter environment abreviation to denote environment that will appear in all resource names"
+        "description": "Three letter environment abreviation to denote environment that will appear in all resource names"
       }
     },
     "storageAccountType": {
@@ -109,7 +109,7 @@
             "language": {
               "type": "string",
               "metadata": {
-                "description": "What Language was used to deploy this resource"
+                "description": "What language was used to deploy this resource"
               }
             },
             "storageAccountType": {

@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.10.61.36676",
-      "templateHash": "2746624318943497695"
+      "templateHash": "1452490382763746313"
     }
   },
   "parameters": {
@@ -26,19 +26,19 @@
       "type": "string",
       "defaultValue": "dev",
       "metadata": {
-        "description": "Three leter environment abreviation to denote environment that will appear in all resource names"
+        "description": "Three letter environment abreviation to denote environment that will appear in all resource names"
       }
     },
     "appServicePlanSKU": {
       "type": "string",
       "metadata": {
-        "description": "AppService Plan Sku"
+        "description": "App Service Plan Sku"
       }
     },
     "retentionDays": {
       "type": "int",
       "metadata": {
-        "description": "How Many Day to retain Log Analytics Logs"
+        "description": "How many days to retain Log Analytics Logs"
       }
     }
   },
@@ -113,7 +113,7 @@
             "language": {
               "type": "string",
               "metadata": {
-                "description": "What Language was used to deploy this resource"
+                "description": "What language was used to deploy this resource"
               }
             },
             "appServicePlanSKU": {
@@ -256,7 +256,7 @@
             "language": {
               "type": "string",
               "metadata": {
-                "description": "What Language was used to deploy this resource"
+                "description": "What language was used to deploy this resource"
               }
             }
           },
@@ -453,7 +453,7 @@
             "language": {
               "type": "string",
               "metadata": {
-                "description": "What Language was used to deploy this resource"
+                "description": "What language was used to deploy this resource"
               }
             }
           },

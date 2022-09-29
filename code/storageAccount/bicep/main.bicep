@@ -2,7 +2,7 @@
 param location string
 @description('Base name that will appear for all resources.') 
 param baseName string = 'flavorsiacbicep'
-@description('Three leter environment abreviation to denote environment that will appear in all resource names') 
+@description('Three letter environment abreviation to denote environment that will appear in all resource names') 
 param environmentName string = 'dev'
 @description('Storage Account type')
 param storageAccountType string = 'Standard_LRS'
@@ -21,7 +21,7 @@ var resourceGroupName = 'rg-${nameSuffix}'
 
 var language = 'Bicep'
 /* Since we are mismatching scopes with a deployment at subscription and resource at resource group
- the main.bicep requires a resource Group deployed at the subscription scope, all modules will be at the resource Group Scop
+ the main.bicep requires a Resource Group deployed at the subscription scope, all modules will be at the Resourece Group scope
  */
 resource resourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' ={
   name: resourceGroupName

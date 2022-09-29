@@ -17,10 +17,10 @@ variable "base_name" {
   description = "Base name that will appear for all resources."
 }
 variable "environment_name" {
-  description = "Three leter environment abreviation to denote environment that will appear in all resource names"
+  description = "Three letter environment abreviation to denote environment that will appear in all resource names"
 }
 variable "resource_group_location" {
-  description = "The azure location the resource gorup will be deployed to"
+  description = "The azure location the resource group will be deployed to"
 }
 variable "storage_account_tier" {
   description = "Storage Account will be Standard or Premium"

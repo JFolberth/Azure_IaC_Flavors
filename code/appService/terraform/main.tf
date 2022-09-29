@@ -20,13 +20,13 @@ variable "environment_name" {
   description = "Three leter environment abreviation to denote environment that will appear in all resource names"
 }
 variable "resource_group_location" {
-  description = "The azure location the resource gorup will be deployed to"
+  description = "The Azure location the Resource Group will be deployed to"
 }
 variable "service_plan_sku_name" {
   description = "SKU for the App Service Plan"
 }
 variable "log_analytics_retention_days" {
-  description = "Numbber of days to retain logs"
+  description = "Number of days to retain logs"
 }
 variable "region_reference" {
   default = {

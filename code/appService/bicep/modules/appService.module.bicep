@@ -6,7 +6,7 @@ param location string
 param appServicePlanID string
 @description('Instrumentation Key for App Insights')
 param appInsightsInstrumentationKey string
-@description('What Language was used to deploy this resource')
+@description('What language was used to deploy this resource')
 param language string
 
 

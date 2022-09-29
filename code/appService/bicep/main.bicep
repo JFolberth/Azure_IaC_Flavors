@@ -2,11 +2,11 @@
 param location string
 @description('Base name that will appear for all resources.') 
 param baseName string = 'iacflavorsbicepASP'
-@description('Three leter environment abreviation to denote environment that will appear in all resource names') 
+@description('Three letter environment abreviation to denote environment that will appear in all resource names') 
 param environmentName string = 'dev'
-@description('AppService Plan Sku')
+@description('App Service Plan Sku')
 param appServicePlanSKU string
-@description('How Many Day to retain Log Analytics Logs')
+@description('How many days to retain Log Analytics Logs')
 param retentionDays int
 
 
@@ -21,8 +21,8 @@ var regionReference = {
 var nameSuffix = toLower('${baseName}-${environmentName}-${regionReference[location]}')
 var language = 'Bicep'
 
-/* Since we are mismatching scopes with a deployment at subscription and resource at resource group
- the main.bicep requires a resource Group deployed at the subscription scope, all modules will be at the resource Group Scop
+/* Since we are mismatching scopes with a deployment at subscription and resource at Resource Group
+ the main.bicep requires a resource Group deployed at the subscription scope, all modules will be at the Resource Group scope
  */
 
 resource resourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' ={
