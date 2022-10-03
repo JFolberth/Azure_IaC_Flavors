@@ -1,5 +1,5 @@
 config:
   AzureIaCFlavors:location: eastus
   AzureIaCFlavors:env: dev
-  AzureIaCFlavors:baseName: iacflavpulumisa
+  AzureIaCFlavors:baseName: flavorspulumisa
   AzureIaCFlavors:storageAccountSKU: Standard_LRS
