@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.10.61.36676",
-      "templateHash": "17595541716482670413"
+      "templateHash": "16924798205134605149"
     }
   },
   "parameters": {
@@ -17,7 +17,7 @@
     },
     "baseName": {
       "type": "string",
-      "defaultValue": "flavorsiacarm",
+      "defaultValue": "iacflavorstfsa",
       "metadata": {
         "description": "Base name that will appear for all resources."
       }
