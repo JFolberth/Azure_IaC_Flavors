@@ -57,7 +57,7 @@ After successfully cloning the best experience will be leveraging an IDE with a 
 Then one would navigate to the via terminal commands to the desired folder location. This will allow you to deploy changes when scoped to a specific folder.
 
 ## Examples
-Each type of scenario will be the top level example. This is done to provide the experience of being able to quickly view how an example can be viewed across multiple languages. Any functionality in an example for one specific language such as type casting, validation, and looping shall be similarly accomplished across other languages for teh same example.
+Each type of scenario will be the top level example. This is done to provide the experience of being able to quickly view how an example can be viewed across multiple languages. Any functionality in an example for one specific language such as type casting, validation, and looping shall be similarly accomplished across other languages for teh same example. 
 
 ## Languages
 Below each example will be a list of languages which have the same example defined in a similar fashion. Based on availability not all examples will contain the same languages. Want to improve it, provide an example in the language you are looking for!
