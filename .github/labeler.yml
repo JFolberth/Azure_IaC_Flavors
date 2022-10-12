@@ -1,2 +1,8 @@
 terraform:
 - code/**/terraform**/*
+bicep:
+- code/**/bicep**/*
+pulumi:
+- code/**/pulumi**/*
+documentation:
+- documentation/**/*
