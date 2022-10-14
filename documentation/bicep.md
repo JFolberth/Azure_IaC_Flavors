@@ -15,7 +15,7 @@ The Azure CLI will compile a Bicep file into an ARM Template. This template will
 
 ![Diagram illustrating Azure Consistent Management Layer](images/ARM/consistent-management-layer.png)
 
-Source From: [Microsoft Docs](https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/overview)
+Source From: [Microsoft Docs](https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/overview) 
 
 # PreReqs
 - [Bicep Tools](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/install#vs-code-and-bicep-extension)
