@@ -1,0 +1,217 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.12.40.16777",
+      "templateHash": "3402797329471761281"
+    }
+  },
+  "parameters": {
+    "location": {
+      "type": "string",
+      "metadata": {
+        "description": "Location for all resources."
+      }
+    },
+    "baseName": {
+      "type": "string",
+      "defaultValue": "iacflavorstfbudg",
+      "metadata": {
+        "description": "Base name that will appear for all resources."
+      }
+    },
+    "environmentName": {
+      "type": "string",
+      "defaultValue": "dev",
+      "metadata": {
+        "description": "Three letter environment abreviation to denote environment that will appear in all resource names"
+      }
+    }
+  },
+  "variables": {
+    "regionReference": {
+      "centralus": "cus",
+      "eastus": "eus",
+      "westus": "wus",
+      "westus2": "wus2"
+    },
+    "nameSuffix": "[format('{0}-{1}-{2}', parameters('baseName'), parameters('environmentName'), variables('regionReference')[parameters('location')])]",
+    "resourceGroupName": "[format('rg-{0}', variables('nameSuffix'))]",
+    "language": "Bicep"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Resources/resourceGroups",
+      "apiVersion": "2021-04-01",
+      "name": "[variables('resourceGroupName')]",
+      "location": "[parameters('location')]",
+      "tags": {
+        "Customer": "FlavorsIaC",
+        "Language": "[variables('language')]"
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-10-01",
+      "name": "[format('{0}-budget', variables('resourceGroupName'))]",
+      "resourceGroup": "[variables('resourceGroupName')]",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "resourceId": {
+            "value": "[subscriptionResourceId('Microsoft.Resources/resourceGroups', variables('resourceGroupName'))]"
+          },
+          "filterName": {
+            "value": "ResourceGroup"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.12.40.16777",
+              "templateHash": "1550934391939626661"
+            }
+          },
+          "parameters": {
+            "resourceId": {
+              "type": "string",
+              "metadata": {
+                "description": "The resource ID the budget will be applied to"
+              }
+            },
+            "budgetAmount": {
+              "type": "int",
+              "defaultValue": 100,
+              "metadata": {
+                "description": "The base amount used for budget, default is 100"
+              }
+            },
+            "firstThreshold": {
+              "type": "int",
+              "defaultValue": 80,
+              "metadata": {
+                "description": "The first threshold when passed that will trigger an alert. This is a "
+              }
+            },
+            "secondThreshold": {
+              "type": "int",
+              "defaultValue": 110,
+              "metadata": {
+                "description": "The second threshold when passed that will trigger an alert"
+              }
+            },
+            "contactEmails": {
+              "type": "array",
+              "defaultValue": [],
+              "metadata": {
+                "description": "List of email address to alert when the budget has been surpassed"
+              }
+            },
+            "startDate": {
+              "type": "string",
+              "defaultValue": "[format('{0}-01', utcNow('yyyy-MM'))]",
+              "metadata": {
+                "description": "A budget must be set to the first day of the month of the current deployment."
+              }
+            },
+            "timeGrain": {
+              "type": "string",
+              "defaultValue": "Monthly",
+              "allowedValues": [
+                "Annually",
+                "BillingAnnual",
+                "BillingMonth",
+                "BillingQuarter",
+                "Monthly",
+                "Quarterly"
+              ],
+              "metadata": {
+                "description": "The time covered by a budget. Tracking of the amount will be reset based on the time grain. BillingMonth, BillingQuarter, and BillingAnnual are only supported by WD customers"
+              }
+            },
+            "filterName": {
+              "type": "string",
+              "defaultValue": "ResourceId",
+              "metadata": {
+                "description": "May be used to filter budgets by user-specified dimensions and/or tags."
+              }
+            },
+            "contactRoles": {
+              "type": "array",
+              "defaultValue": [
+                "Owner"
+              ],
+              "metadata": {
+                "description": "List of RBAC roles that should be notifed"
+              }
+            },
+            "category": {
+              "type": "string",
+              "defaultValue": "Cost",
+              "allowedValues": [
+                "Cost"
+              ],
+              "metadata": {
+                "description": "he category of the budget, whether the budget tracks cost or usage."
+              }
+            }
+          },
+          "variables": {
+            "operator": "GreaterThan"
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Consumption/budgets",
+              "apiVersion": "2021-10-01",
+              "name": "[format('{0}-ConsumptionBudget', substring(parameters('resourceId'), lastIndexOf(parameters('resourceId'), '/'), sub(length(parameters('resourceId')), lastIndexOf(parameters('resourceId'), '/'))))]",
+              "properties": {
+                "timePeriod": {
+                  "startDate": "[parameters('startDate')]"
+                },
+                "timeGrain": "[parameters('timeGrain')]",
+                "category": "[parameters('category')]",
+                "amount": "[parameters('budgetAmount')]",
+                "notifications": {
+                  "NotificationForExceededBudget1": {
+                    "enabled": true,
+                    "contactEmails": "[parameters('contactEmails')]",
+                    "contactRoles": "[parameters('contactRoles')]",
+                    "threshold": "[parameters('firstThreshold')]",
+                    "operator": "[variables('operator')]"
+                  },
+                  "NotificationForExceededBudget2": {
+                    "enabled": true,
+                    "contactEmails": "[parameters('contactEmails')]",
+                    "contactRoles": "[parameters('contactRoles')]",
+                    "threshold": "[parameters('secondThreshold')]",
+                    "operator": "[variables('operator')]"
+                  }
+                },
+                "filter": {
+                  "dimensions": {
+                    "name": "[parameters('filterName')]",
+                    "operator": "In",
+                    "values": [
+                      "[parameters('resourceId')]"
+                    ]
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "dependsOn": [
+        "[subscriptionResourceId('Microsoft.Resources/resourceGroups', variables('resourceGroupName'))]"
+      ]
+    }
+  ]
+}
