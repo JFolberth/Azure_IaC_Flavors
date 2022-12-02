@@ -33,7 +33,7 @@ param contactRoles array = [
 ])
 param category string = 'Cost'
 @description('The comparison operator.')
-var operator = 'GreaterThan'
+param operator string = 'GreaterThan'
 
 resource budget 'Microsoft.Consumption/budgets@2021-10-01' = {
   name: '${substring(resourceId,lastIndexOf(resourceId,'/'),(length(resourceId)-lastIndexOf(resourceId,'/')))}-ConsumptionBudget'
