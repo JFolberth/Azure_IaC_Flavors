@@ -1,0 +1,158 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.14.46.61228",
+      "templateHash": "1331070243863314472"
+    }
+  },
+  "parameters": {
+    "location": {
+      "type": "string",
+      "metadata": {
+        "description": "Location for all resources."
+      }
+    },
+    "baseName": {
+      "type": "string",
+      "defaultValue": "iacflavorsbicep",
+      "metadata": {
+        "description": "Base name that will appear for all resources."
+      }
+    },
+    "environmentName": {
+      "type": "string",
+      "defaultValue": "dev",
+      "metadata": {
+        "description": "Three letter environment abreviation to denote environment that will appear in all resource names"
+      }
+    },
+    "formRecognizerSKU": {
+      "type": "string",
+      "metadata": {
+        "description": "Form Recognizer Sku"
+      }
+    }
+  },
+  "variables": {
+    "regionReference": {
+      "centralus": "cus",
+      "eastus": "eus",
+      "westus": "wus",
+      "westus2": "wus2"
+    },
+    "nameSuffix": "[toLower(format('{0}-{1}-{2}', parameters('baseName'), parameters('environmentName'), variables('regionReference')[parameters('location')]))]",
+    "language": "Bicep"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Resources/resourceGroups",
+      "apiVersion": "2021-04-01",
+      "name": "[toLower(format('rg-{0}', variables('nameSuffix')))]",
+      "location": "[parameters('location')]",
+      "tags": {
+        "Customer": "FlavorsIaC",
+        "Language": "[variables('language')]"
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-10-01",
+      "name": "formRecognizerModule",
+      "resourceGroup": "[toLower(format('rg-{0}', variables('nameSuffix')))]",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "language": {
+            "value": "[variables('language')]"
+          },
+          "formRecognizerSKU": {
+            "value": "[parameters('formRecognizerSKU')]"
+          },
+          "formRecognizerName": {
+            "value": "[variables('nameSuffix')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.14.46.61228",
+              "templateHash": "15848163749206729011"
+            }
+          },
+          "parameters": {
+            "formRecognizerName": {
+              "type": "string",
+              "metadata": {
+                "description": "Name for the Form Recognizer resource."
+              }
+            },
+            "formRecognizerSKU": {
+              "type": "string",
+              "allowedValues": [
+                "F0",
+                "S0"
+              ],
+              "metadata": {
+                "description": "SKU for Form Recognizer"
+              }
+            },
+            "location": {
+              "type": "string",
+              "metadata": {
+                "description": "Location for resource."
+              }
+            },
+            "language": {
+              "type": "string",
+              "metadata": {
+                "description": "What language was used to deploy this resource"
+              }
+            }
+          },
+          "resources": [
+            {
+              "type": "Microsoft.CognitiveServices/accounts",
+              "apiVersion": "2022-12-01",
+              "name": "[toLower(format('fr-{0}', parameters('formRecognizerName')))]",
+              "location": "[parameters('location')]",
+              "kind": "FormRecognizer",
+              "sku": {
+                "name": "[parameters('formRecognizerSKU')]"
+              },
+              "properties": {
+                "customSubDomainName": "[parameters('formRecognizerName')]"
+              },
+              "identity": {
+                "type": "SystemAssigned"
+              },
+              "tags": {
+                "language": "[parameters('language')]"
+              }
+            }
+          ],
+          "outputs": {
+            "formRecognizerPrincipalID": {
+              "type": "string",
+              "value": "[reference(resourceId('Microsoft.CognitiveServices/accounts', toLower(format('fr-{0}', parameters('formRecognizerName')))), '2022-12-01', 'full').identity.principalId]"
+            }
+          }
+        }
+      },
+      "dependsOn": [
+        "[subscriptionResourceId('Microsoft.Resources/resourceGroups', toLower(format('rg-{0}', variables('nameSuffix'))))]"
+      ]
+    }
+  ]
+}
