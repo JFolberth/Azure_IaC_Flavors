@@ -29,4 +29,3 @@ resource formRecognizer 'Microsoft.CognitiveServices/accounts@2022-12-01'={
 
 }
 output formRecognizerPrincipalID string = formRecognizer.identity.principalId
-output formRecognizerKey string = formRecognizer.keys[0].value
