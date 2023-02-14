@@ -1,4 +1,4 @@
-@description('Name for the For Recognizer resource.')
+@description('Name for the Form Recognizer resource.')
 param formRecognizerName string
 @description('SKU for Form Recognizer')
 @allowed(['F0'
@@ -8,6 +8,7 @@ param formRecognizerSKU string
 param location string
 @description('What language was used to deploy this resource')
 param language string
+
 
 resource formRecognizer 'Microsoft.CognitiveServices/accounts@2022-12-01'={
   name: toLower('fr-${formRecognizerName}')
@@ -26,5 +27,6 @@ resource formRecognizer 'Microsoft.CognitiveServices/accounts@2022-12-01'={
     language: language
   }
 
-
 }
+output formRecognizerPrincipalID string = formRecognizer.identity.principalId
+output formRecognizerKey string = formRecognizer.keys[0].value
