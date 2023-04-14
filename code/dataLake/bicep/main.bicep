@@ -1,7 +1,7 @@
 @description('Location for all resources.')
 param location string
 @description('Base name that will appear for all resources.') 
-param baseName string = 'iacflavorstfsa'
+param baseName string = 'iacflavbicepadl'
 @description('Three letter environment abreviation to denote environment that will appear in all resource names') 
 param environmentName string = 'dev'
 @description('Storage Account type')

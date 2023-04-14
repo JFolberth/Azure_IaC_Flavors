@@ -18,8 +18,8 @@ param language string
 ])
 param storageAccountType string = 'Standard_LRS'
 
-resource sa 'Microsoft.Storage/storageAccounts@2021-06-01' = {
-  name: toLower(replace('sa${storageAccountName}','-',''))
+resource sa 'Microsoft.Storage/storageAccounts@2022-09-01' = {
+  name: toLower(replace('adl${storageAccountName}','-',''))
   location: location
   identity: {
     type: 'SystemAssigned'
@@ -31,5 +31,9 @@ resource sa 'Microsoft.Storage/storageAccounts@2021-06-01' = {
     Language: language
   }
   kind: 'StorageV2'
-  properties: {}
+  properties: {
+    isHnsEnabled:true
+  }
+  
+
 }
