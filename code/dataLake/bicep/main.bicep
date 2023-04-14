@@ -32,8 +32,8 @@ resource resourceGroup 'Microsoft.Resources/resourceGroups@2022-09-01' ={
   }
 }
 
-module storageAccount 'modules/storageAccount.module.bicep' ={
-  name: 'storageAccountModule'
+module storageAccount 'modules/dataLake.module.bicep' ={
+  name: 'dataLakeModule'
   scope: resourceGroup
   params:{
     location: location
