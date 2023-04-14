@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.16.2.56959",
-      "templateHash": "4112990979821557560"
+      "templateHash": "11069633646106315178"
     }
   },
   "parameters": {
@@ -237,6 +237,9 @@
           },
           "storageAccountName": {
             "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('resourceGroupName')), 'Microsoft.Resources/deployments', 'storageAccountModule'), '2022-09-01').outputs.storageAccountName.value]"
+          },
+          "language": {
+            "value": "[variables('language')]"
           }
         },
         "template": {
@@ -246,7 +249,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.16.2.56959",
-              "templateHash": "5853584273818410171"
+              "templateHash": "3157295314480007086"
             }
           },
           "parameters": {
@@ -306,6 +309,12 @@
               "metadata": {
                 "description": "Is SQL Defender Enabled"
               }
+            },
+            "language": {
+              "type": "string",
+              "metadata": {
+                "description": "What language was used to deploy this resource"
+              }
             }
           },
           "resources": [
@@ -341,6 +350,9 @@
               },
               "identity": {
                 "type": "SystemAssigned"
+              },
+              "tags": {
+                "Language": "[parameters('language')]"
               }
             },
             {
@@ -573,6 +585,9 @@
           },
           "serverName": {
             "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('resourceGroupName')), 'Microsoft.Resources/deployments', 'sqlServerModule'), '2022-09-01').outputs.sqlServerName.value]"
+          },
+          "language": {
+            "value": "[variables('language')]"
           }
         },
         "template": {
@@ -582,7 +597,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.16.2.56959",
-              "templateHash": "16372423895382871596"
+              "templateHash": "7480640735472636580"
             }
           },
           "parameters": {
@@ -605,6 +620,12 @@
               "metadata": {
                 "description": "Location for all resources."
               }
+            },
+            "language": {
+              "type": "string",
+              "metadata": {
+                "description": "What language was used to deploy this resource"
+              }
             }
           },
           "resources": [
@@ -616,6 +637,9 @@
               "sku": {
                 "name": "Standard",
                 "tier": "Standard"
+              },
+              "tags": {
+                "Language": "[parameters('language')]"
               }
             }
           ]
