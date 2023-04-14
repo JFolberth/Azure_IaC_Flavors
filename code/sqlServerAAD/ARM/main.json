@@ -1,0 +1,630 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.16.2.56959",
+      "templateHash": "4112990979821557560"
+    }
+  },
+  "parameters": {
+    "location": {
+      "type": "string",
+      "metadata": {
+        "description": "Location for all resources."
+      }
+    },
+    "baseName": {
+      "type": "string",
+      "defaultValue": "bicepaad",
+      "metadata": {
+        "description": "Base name that will appear for all resources."
+      }
+    },
+    "environmentName": {
+      "type": "string",
+      "defaultValue": "dev",
+      "metadata": {
+        "description": "Three letter environment abreviation to denote environment that will appear in all resource names"
+      }
+    },
+    "storageAccountType": {
+      "type": "string",
+      "defaultValue": "Standard_LRS",
+      "metadata": {
+        "description": "Storage Account type"
+      }
+    },
+    "sqlAdminGroupName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the Admin group to assign AAD permissions over the SQL Server"
+      }
+    },
+    "sqlAdminGroupObjectId": {
+      "type": "string",
+      "metadata": {
+        "description": "SID of the group to assign AAD permissions over the SQL Server"
+      }
+    },
+    "retentionDays": {
+      "type": "int",
+      "metadata": {
+        "description": "How many days to retain Log Analytics Logs"
+      }
+    },
+    "sqlDBName": {
+      "type": "string",
+      "defaultValue": "sampleDB",
+      "metadata": {
+        "description": "Name of the SQL Database to create"
+      }
+    }
+  },
+  "variables": {
+    "regionReference": {
+      "centralus": "cus",
+      "eastus": "eus",
+      "westus": "wus",
+      "westus2": "wus2"
+    },
+    "nameSuffix": "[format('{0}-{1}-{2}', parameters('baseName'), parameters('environmentName'), variables('regionReference')[parameters('location')])]",
+    "resourceGroupName": "[format('rg-{0}', variables('nameSuffix'))]",
+    "language": "Bicep"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Resources/resourceGroups",
+      "apiVersion": "2021-04-01",
+      "name": "[variables('resourceGroupName')]",
+      "location": "[parameters('location')]",
+      "tags": {
+        "Customer": "FlavorsIaC",
+        "Language": "[variables('language')]"
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2022-09-01",
+      "name": "storageAccountModule",
+      "resourceGroup": "[variables('resourceGroupName')]",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "storageAccountName": {
+            "value": "[variables('nameSuffix')]"
+          },
+          "language": {
+            "value": "[variables('language')]"
+          },
+          "storageAccountType": {
+            "value": "[parameters('storageAccountType')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.16.2.56959",
+              "templateHash": "18262837112888387977"
+            }
+          },
+          "parameters": {
+            "storageAccountName": {
+              "type": "string",
+              "metadata": {
+                "description": "Name for the storage account"
+              }
+            },
+            "location": {
+              "type": "string",
+              "metadata": {
+                "description": "Location for resource."
+              }
+            },
+            "language": {
+              "type": "string",
+              "metadata": {
+                "description": "What language was used to deploy this resource"
+              }
+            },
+            "storageAccountType": {
+              "type": "string",
+              "defaultValue": "Standard_LRS",
+              "allowedValues": [
+                "Premium_LRS",
+                "Premium_ZRS",
+                "Standard_GRS",
+                "Standard_GZRS",
+                "Standard_LRS",
+                "Standard_RAGRS",
+                "Standard_RAGZRS",
+                "Standard_ZRS"
+              ],
+              "metadata": {
+                "description": "Storage Account type"
+              }
+            }
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Storage/storageAccounts",
+              "apiVersion": "2022-09-01",
+              "name": "[toLower(replace(format('sa{0}', parameters('storageAccountName')), '-', ''))]",
+              "location": "[parameters('location')]",
+              "identity": {
+                "type": "SystemAssigned"
+              },
+              "sku": {
+                "name": "[parameters('storageAccountType')]"
+              },
+              "tags": {
+                "Language": "[parameters('language')]"
+              },
+              "kind": "StorageV2",
+              "properties": {}
+            },
+            {
+              "type": "Microsoft.Storage/storageAccounts/blobServices",
+              "apiVersion": "2022-09-01",
+              "name": "[format('{0}/{1}', toLower(replace(format('sa{0}', parameters('storageAccountName')), '-', '')), 'default')]",
+              "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts', toLower(replace(format('sa{0}', parameters('storageAccountName')), '-', '')))]"
+              ]
+            },
+            {
+              "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
+              "apiVersion": "2022-09-01",
+              "name": "[format('{0}/{1}/{2}', toLower(replace(format('sa{0}', parameters('storageAccountName')), '-', '')), 'default', 'vulnerabilityscans')]",
+              "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts/blobServices', toLower(replace(format('sa{0}', parameters('storageAccountName')), '-', '')), 'default')]"
+              ]
+            }
+          ],
+          "outputs": {
+            "storageAccountName": {
+              "type": "string",
+              "value": "[toLower(replace(format('sa{0}', parameters('storageAccountName')), '-', ''))]"
+            },
+            "storageAccountVulnerabilityEndpoint": {
+              "type": "string",
+              "value": "[format('{0}{1}', reference(resourceId('Microsoft.Storage/storageAccounts', toLower(replace(format('sa{0}', parameters('storageAccountName')), '-', ''))), '2022-09-01').primaryEndpoints.blob, 'vulnerabilityscans')]"
+            }
+          }
+        }
+      },
+      "dependsOn": [
+        "[subscriptionResourceId('Microsoft.Resources/resourceGroups', variables('resourceGroupName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2022-09-01",
+      "name": "sqlServerModule",
+      "resourceGroup": "[variables('resourceGroupName')]",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "serverName": {
+            "value": "[variables('nameSuffix')]"
+          },
+          "storageAccountVulnerabilityEndpoint": {
+            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('resourceGroupName')), 'Microsoft.Resources/deployments', 'storageAccountModule'), '2022-09-01').outputs.storageAccountVulnerabilityEndpoint.value]"
+          },
+          "logAnalyticsWorkspaceID": {
+            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('resourceGroupName')), 'Microsoft.Resources/deployments', 'logAnalyticsModule'), '2022-09-01').outputs.logAnalyticsWorkspaceID.value]"
+          },
+          "sqlAdminGroupName": {
+            "value": "[parameters('sqlAdminGroupName')]"
+          },
+          "sqlAdminGroupObjectId": {
+            "value": "[parameters('sqlAdminGroupObjectId')]"
+          },
+          "storageAccountName": {
+            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('resourceGroupName')), 'Microsoft.Resources/deployments', 'storageAccountModule'), '2022-09-01').outputs.storageAccountName.value]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.16.2.56959",
+              "templateHash": "5853584273818410171"
+            }
+          },
+          "parameters": {
+            "serverName": {
+              "type": "string",
+              "metadata": {
+                "description": "Name for the SQL Server"
+              }
+            },
+            "sqlAdminGroupObjectId": {
+              "type": "string",
+              "metadata": {
+                "description": "AD Group Object ID for the SQL Admins"
+              }
+            },
+            "sqlAdminGroupName": {
+              "type": "string",
+              "metadata": {
+                "description": "AD Group Name for the SQL Admins"
+              }
+            },
+            "location": {
+              "type": "string",
+              "defaultValue": "[resourceGroup().location]",
+              "metadata": {
+                "description": "Location for all resources."
+              }
+            },
+            "vulnerabilityScanEmails": {
+              "type": "string",
+              "defaultValue": "SQLAdmin@TEST.COM",
+              "metadata": {
+                "description": "Email address to send vulnerability scan results to"
+              }
+            },
+            "logAnalyticsWorkspaceID": {
+              "type": "string",
+              "metadata": {
+                "description": "Log Analytics Workspace ID to send SQL Diagnostics to"
+              }
+            },
+            "storageAccountVulnerabilityEndpoint": {
+              "type": "string",
+              "metadata": {
+                "description": "Storage Account Endpoint for Vulnerability Assessment"
+              }
+            },
+            "storageAccountName": {
+              "type": "string",
+              "metadata": {
+                "description": "Storage Account Name for Vulnerability Assessment"
+              }
+            },
+            "enableSqlDefender": {
+              "type": "bool",
+              "defaultValue": false,
+              "metadata": {
+                "description": "Is SQL Defender Enabled"
+              }
+            }
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Sql/servers/securityAlertPolicies",
+              "apiVersion": "2022-08-01-preview",
+              "name": "[format('{0}/{1}', toLower(format('sql-{0}', parameters('serverName'))), 'advancedSecurityAssessment')]",
+              "properties": {
+                "state": "Enabled"
+              },
+              "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', toLower(format('sql-{0}', parameters('serverName'))))]"
+              ]
+            },
+            {
+              "type": "Microsoft.Sql/servers",
+              "apiVersion": "2022-08-01-preview",
+              "name": "[toLower(format('sql-{0}', parameters('serverName')))]",
+              "location": "[parameters('location')]",
+              "properties": {
+                "version": "12.0",
+                "minimalTlsVersion": "1.2",
+                "publicNetworkAccess": "Enabled",
+                "restrictOutboundNetworkAccess": "Disabled",
+                "administrators": {
+                  "administratorType": "ActiveDirectory",
+                  "tenantId": "[subscription().tenantId]",
+                  "principalType": "Group",
+                  "azureADOnlyAuthentication": true,
+                  "login": "[parameters('sqlAdminGroupName')]",
+                  "sid": "[parameters('sqlAdminGroupObjectId')]"
+                }
+              },
+              "identity": {
+                "type": "SystemAssigned"
+              }
+            },
+            {
+              "condition": "[parameters('enableSqlDefender')]",
+              "type": "Microsoft.Sql/servers/vulnerabilityAssessments",
+              "apiVersion": "2022-08-01-preview",
+              "name": "[format('{0}/{1}', toLower(format('sql-{0}', parameters('serverName'))), 'default')]",
+              "properties": {
+                "recurringScans": {
+                  "emails": [
+                    "[parameters('vulnerabilityScanEmails')]"
+                  ],
+                  "isEnabled": true
+                },
+                "storageContainerPath": "[parameters('storageAccountVulnerabilityEndpoint')]"
+              },
+              "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', toLower(format('sql-{0}', parameters('serverName'))))]"
+              ]
+            },
+            {
+              "type": "Microsoft.Insights/diagnosticSettings",
+              "apiVersion": "2021-05-01-preview",
+              "scope": "[format('Microsoft.Sql/servers/{0}/databases/{1}', toLower(format('sql-{0}', parameters('serverName'))), 'master')]",
+              "name": "logAnalyticsDiagnosticSettings",
+              "properties": {
+                "workspaceId": "[parameters('logAnalyticsWorkspaceID')]",
+                "logs": [
+                  {
+                    "category": "SQLSecurityAuditEvents",
+                    "enabled": true
+                  }
+                ]
+              },
+              "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers/databases', toLower(format('sql-{0}', parameters('serverName'))), 'master')]"
+              ]
+            },
+            {
+              "type": "Microsoft.Sql/servers/auditingSettings",
+              "apiVersion": "2022-05-01-preview",
+              "name": "[format('{0}/{1}', toLower(format('sql-{0}', parameters('serverName'))), 'default')]",
+              "properties": {
+                "auditActionsAndGroups": [
+                  "BATCH_COMPLETED_GROUP",
+                  "SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP",
+                  "FAILED_DATABASE_AUTHENTICATION_GROUP"
+                ],
+                "isAzureMonitorTargetEnabled": true,
+                "state": "Enabled"
+              },
+              "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', toLower(format('sql-{0}', parameters('serverName'))))]"
+              ]
+            },
+            {
+              "type": "Microsoft.Sql/servers/databases",
+              "apiVersion": "2022-08-01-preview",
+              "name": "[format('{0}/{1}', toLower(format('sql-{0}', parameters('serverName'))), 'master')]",
+              "location": "[parameters('location')]",
+              "properties": {},
+              "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', toLower(format('sql-{0}', parameters('serverName'))))]"
+              ]
+            },
+            {
+              "type": "Microsoft.Authorization/roleAssignments",
+              "apiVersion": "2022-04-01",
+              "scope": "[format('Microsoft.Storage/storageAccounts/{0}', parameters('storageAccountName'))]",
+              "name": "[guid(resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName')), resourceId('Microsoft.Sql/servers', toLower(format('sql-{0}', parameters('serverName')))), subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'ba92f5b4-2d11-453d-a403-e96b0029c9fe'))]",
+              "properties": {
+                "roleDefinitionId": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'ba92f5b4-2d11-453d-a403-e96b0029c9fe')]",
+                "principalId": "[reference(resourceId('Microsoft.Sql/servers', toLower(format('sql-{0}', parameters('serverName')))), '2022-08-01-preview', 'full').identity.principalId]",
+                "principalType": "ServicePrincipal"
+              },
+              "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', toLower(format('sql-{0}', parameters('serverName'))))]"
+              ]
+            },
+            {
+              "type": "Microsoft.Sql/servers/advancedThreatProtectionSettings",
+              "apiVersion": "2022-08-01-preview",
+              "name": "[format('{0}/{1}', toLower(format('sql-{0}', parameters('serverName'))), 'Default')]",
+              "properties": {
+                "state": "Enabled"
+              },
+              "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', toLower(format('sql-{0}', parameters('serverName'))))]"
+              ]
+            },
+            {
+              "type": "Microsoft.Sql/servers/firewallRules",
+              "apiVersion": "2022-08-01-preview",
+              "name": "[format('{0}/{1}', toLower(format('sql-{0}', parameters('serverName'))), 'AllowAllWindowsAzureIps')]",
+              "properties": {
+                "endIpAddress": "0.0.0.0",
+                "startIpAddress": "0.0.0.0"
+              },
+              "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', toLower(format('sql-{0}', parameters('serverName'))))]"
+              ]
+            }
+          ],
+          "outputs": {
+            "sqlServerName": {
+              "type": "string",
+              "value": "[toLower(format('sql-{0}', parameters('serverName')))]"
+            }
+          }
+        }
+      },
+      "dependsOn": [
+        "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('resourceGroupName')), 'Microsoft.Resources/deployments', 'logAnalyticsModule')]",
+        "[subscriptionResourceId('Microsoft.Resources/resourceGroups', variables('resourceGroupName'))]",
+        "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('resourceGroupName')), 'Microsoft.Resources/deployments', 'storageAccountModule')]"
+      ]
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2022-09-01",
+      "name": "logAnalyticsModule",
+      "resourceGroup": "[variables('resourceGroupName')]",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "logAnalyticsName": {
+            "value": "[variables('nameSuffix')]"
+          },
+          "language": {
+            "value": "[variables('language')]"
+          },
+          "retentionDays": {
+            "value": "[parameters('retentionDays')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.16.2.56959",
+              "templateHash": "6337496631063701605"
+            }
+          },
+          "parameters": {
+            "logAnalyticsName": {
+              "type": "string",
+              "metadata": {
+                "description": "Name for the Log Analytics Workspace"
+              }
+            },
+            "location": {
+              "type": "string",
+              "metadata": {
+                "description": "Location for resource."
+              }
+            },
+            "retentionDays": {
+              "type": "int",
+              "defaultValue": 30,
+              "metadata": {
+                "description": "How Many Day to retain Log Analytics Logs"
+              }
+            },
+            "language": {
+              "type": "string",
+              "metadata": {
+                "description": "What Language was used to deploy this resource"
+              }
+            }
+          },
+          "resources": [
+            {
+              "type": "Microsoft.OperationalInsights/workspaces",
+              "apiVersion": "2022-10-01",
+              "name": "[toLower(format('la-{0}', parameters('logAnalyticsName')))]",
+              "location": "[parameters('location')]",
+              "tags": {
+                "displayName": "Log Analytics",
+                "Language": "[parameters('language')]"
+              },
+              "properties": {
+                "sku": {
+                  "name": "PerGB2018"
+                },
+                "retentionInDays": "[parameters('retentionDays')]",
+                "features": {
+                  "searchVersion": 1,
+                  "legacy": 0,
+                  "enableLogAccessUsingOnlyResourcePermissions": true
+                }
+              }
+            }
+          ],
+          "outputs": {
+            "logAnalyticsWorkspaceID": {
+              "type": "string",
+              "value": "[resourceId('Microsoft.OperationalInsights/workspaces', toLower(format('la-{0}', parameters('logAnalyticsName'))))]"
+            }
+          }
+        }
+      },
+      "dependsOn": [
+        "[subscriptionResourceId('Microsoft.Resources/resourceGroups', variables('resourceGroupName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2022-09-01",
+      "name": "sqlDatabaseModule",
+      "resourceGroup": "[variables('resourceGroupName')]",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "sqlDBName": {
+            "value": "[parameters('sqlDBName')]"
+          },
+          "serverName": {
+            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('resourceGroupName')), 'Microsoft.Resources/deployments', 'sqlServerModule'), '2022-09-01').outputs.sqlServerName.value]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.16.2.56959",
+              "templateHash": "16372423895382871596"
+            }
+          },
+          "parameters": {
+            "serverName": {
+              "type": "string",
+              "metadata": {
+                "description": "The name of the SQL logical server."
+              }
+            },
+            "sqlDBName": {
+              "type": "string",
+              "defaultValue": "SampleDB",
+              "metadata": {
+                "description": "The name of the SQL Database."
+              }
+            },
+            "location": {
+              "type": "string",
+              "defaultValue": "[resourceGroup().location]",
+              "metadata": {
+                "description": "Location for all resources."
+              }
+            }
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Sql/servers/databases",
+              "apiVersion": "2022-05-01-preview",
+              "name": "[format('{0}/{1}', parameters('serverName'), parameters('sqlDBName'))]",
+              "location": "[parameters('location')]",
+              "sku": {
+                "name": "Standard",
+                "tier": "Standard"
+              }
+            }
+          ]
+        }
+      },
+      "dependsOn": [
+        "[subscriptionResourceId('Microsoft.Resources/resourceGroups', variables('resourceGroupName'))]",
+        "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('resourceGroupName')), 'Microsoft.Resources/deployments', 'sqlServerModule')]"
+      ]
+    }
+  ]
+}
