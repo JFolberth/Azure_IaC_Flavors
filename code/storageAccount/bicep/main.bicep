@@ -1,11 +1,14 @@
 @description('Location for all resources.')
 param location string
 @description('Base name that will appear for all resources.') 
-param baseName string = 'iacflavorstfsa'
+param baseName string = 'iacflavorsstacksa'
 @description('Three letter environment abreviation to denote environment that will appear in all resource names') 
 param environmentName string = 'dev'
 @description('Storage Account type')
 param storageAccountType string = 'Standard_LRS'
+@description('Number of storage accounts to deploy')
+param numberOfStorageAccounts int = 2
+
 
 
 targetScope = 'subscription'
@@ -32,13 +35,17 @@ resource resourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' ={
   }
 }
 
-module storageAccount 'modules/storageAccount.module.bicep' ={
-  name: 'storageAccountModule'
+
+
+
+module storageAccount 'modules/storageAccount.module.bicep' =[for i in range(0, numberOfStorageAccounts):{
+  name: 'storageAccountModule${i}'
   scope: resourceGroup
   params:{
     location: location
-    storageAccountName: nameSuffix
+    storageAccountName: '${nameSuffix}${i}'
     language: language
     storageAccountType: storageAccountType
   }
 }
+]
