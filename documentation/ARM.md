@@ -34,7 +34,7 @@ Deployment for these examples are done at the Subscription level. This is done t
 `az deployment sub create --name storageDeployment --location eastus --template-file main.json --parameters parameters/dev.eus.parameters.json`
 
 # Links
-- [Microsoft Azure Quickstarts](https://azure.microsoft.com/en-us/resources/templates/)
+- [Microsoft Azure Quickstarts](https://learn.microsoft.com/en-us/samples/browse/?expanded=azure&products=azure-resource-manager)
 - [Microsoft Learning Path](https://docs.microsoft.com/en-us/learn/paths/deploy-manage-resource-manager-templates/)
 - [ARM Resource Schemas](https://docs.microsoft.com/en-us/azure/templates/#arm-templates)
 - [Bicep to ARM Playground](https://bicepdemo.z22.web.core.windows.net/)
