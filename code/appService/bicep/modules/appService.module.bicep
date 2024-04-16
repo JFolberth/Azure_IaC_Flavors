@@ -10,7 +10,7 @@ param appInsightsInstrumentationKey string
 param language string
 
 
-resource appService 'Microsoft.Web/sites@2022-03-01' = {
+resource appService 'Microsoft.Web/sites@2023-01-01' = {
   name: toLower('app-${appServiceName}')
   location: location
   identity: {
@@ -29,7 +29,7 @@ resource appService 'Microsoft.Web/sites@2022-03-01' = {
   }
 }
 
-resource appServiceLogging 'Microsoft.Web/sites/config@2022-03-01' = {
+resource appServiceLogging 'Microsoft.Web/sites/config@2023-01-01' = {
   parent: appService
   name: 'appsettings'
   properties: {

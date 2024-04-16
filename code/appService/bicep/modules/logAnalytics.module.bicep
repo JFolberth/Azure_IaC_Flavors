@@ -7,7 +7,7 @@ param retentionDays int = 30
 @description('What Language was used to deploy this resource')
 param language string
 
-resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2020-08-01' = {
+resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2023-09-01' = {
   name: toLower('la-${logAnalyticsName}')
   location: location
   tags: {

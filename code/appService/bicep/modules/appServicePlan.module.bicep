@@ -39,7 +39,7 @@ param appServicePlanSKU string = 'D1'
 @allowed(['windows','linux','windowscontainer'])
 param appServiceKind string = 'windows'
 
-resource appServicePlan 'Microsoft.Web/serverfarms@2022-03-01' = {
+resource appServicePlan 'Microsoft.Web/serverfarms@2023-01-01' = {
   name: toLower('asp-${appServicePlanName}')
   location: location
   kind: appServiceKind
